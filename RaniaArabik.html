@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نمذجة ومحاكاة الانجراف الحراري لحساس الأس الهيدروجيني</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Base font for the entire document */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Main container for the article content, mimicking a paper layout */
+        .article-container {
+            max-width: 800px; /* Max width for readability */
+            margin: 0 auto; /* Center the container */
+            padding: 2rem; /* Padding around the content */
+            background-color: white; /* White background for the paper */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+            border-radius: 8px; /* Rounded corners for modern feel */
+        }
+        /* Styling for main section headings */
+        .section-heading {
+            font-size: 1.5rem; /* Larger font size */
+            font-weight: 600; /* Semi-bold */
+            margin-top: 2rem; /* Space above */
+            margin-bottom: 1rem; /* Space below */
+            border-bottom: 1px solid #ccc; /* Underline for separation */
+            padding-bottom: 0.5rem; /* Padding below underline */
+        }
+        /* Styling for sub-section headings */
+        .subsection-heading {
+            font-size: 1.25rem; /* Slightly smaller than main headings */
+            font-weight: 600; /* Semi-bold */
+            margin-top: 1.5rem; /* Space above */
+            margin-bottom: 0.75rem; /* Space below */
+        }
+        /* Caption styling for figures and tables */
+        .figure-caption, .table-caption {
+            font-size: 0.875rem; /* Smaller font */
+            text-align: center; /* Center align captions */
+            margin-top: 0.5rem; /* Space above */
+            margin-bottom: 1rem; /* Space below */
+        }
+        /* General table styling */
+        table {
+            width: 100%; /* Full width within its container */
+            border-collapse: collapse; /* Collapse borders for a clean look */
+            margin-bottom: 1rem; /* Space below table */
+        }
+        /* Table header and data cell styling */
+        th, td {
+            border: 1px solid #ddd; /* Light grey border */
+            padding: 8px; /* Padding inside cells */
+            text-align: right; /* Right-align text for Arabic */
+        }
+        /* Table header specific styling */
+        th {
+            background-color: #f2f2f2; /* Light grey background for headers */
+        }
+        /* Author list styling */
+        .author-list {
+            list-style: none; /* Remove default list bullets */
+            padding: 0; /* Remove default padding */
+            margin-top: 1rem; /* Space above */
+        }
+        .author-list li {
+            margin-bottom: 0.5rem; /* Space between list items */
+        }
+        /* Abstract section styling */
+        .abstract-section {
+            background-color: #f9f9f9; /* Light background */
+            border-left: 4px solid #007bff; /* Blue left border */
+            padding: 1rem; /* Padding inside */
+            margin-bottom: 1.5rem; /* Space below */
+            border-radius: 4px; /* Slightly rounded corners */
+        }
+        /* Keywords styling */
+        .keywords {
+            font-size: 0.9rem; /* Smaller font */
+            margin-top: 1rem; /* Space above */
+        }
+        .keywords strong {
+            font-weight: 600; /* Semi-bold for the "Keywords" label */
+        }
+        /* Reference list styling */
+        .reference-list {
+            list-style: decimal; /* Numbered list */
+            padding-right: 1.5rem; /* Padding for numbers in RTL */
+            margin-top: 1rem; /* Space above */
+            font-size: 0.9rem; /* Smaller font */
+        }
+        .reference-list li {
+            margin-bottom: 0.5rem; /* Space between list items */
+        }
+        /* Page break visual separator */
+        .page-break {
+            border-top: 1px dashed #ccc; /* Dashed line to indicate page separation */
+            margin-top: 2rem; /* Space above the break */
+            padding-top: 2rem; /* Space below the break */
+        }
+        /* Header information (citations, reads) */
+        .header-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+        .header-info div {
+            text-align: right; /* Default text align for Arabic */
+        }
+        .header-info .citations-reads {
+            text-align: left; /* Align citations/reads to the left as in original */
+        }
+        .header-info .citations-reads p {
+            margin: 0;
+            line-height: 1.2;
+        }
+        /* Page number indicator (simulated) */
+        .page-number {
+            position: absolute;
+            top: 1rem;
+            left: 1rem; /* Positioned to the left for RTL */
+            font-size: 0.8rem;
+            color: #666;
+        }
+        /* Wiley header (logo and page number) */
+        .wiley-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .wiley-header .page-num {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        .wiley-header .wiley-text {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #333;
+        }
+        /* Styling for placeholder images */
+        .figure-image {
+            display: block; /* Ensures it takes its own line */
+            margin: 1rem auto; /* Center image with some margin */
+            max-width: 100%; /* Ensures image is responsive */
+            height: auto; /* Maintain aspect ratio */
+            border-radius: 8px; /* Rounded corners */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Subtle shadow */
+        }
+        /* Responsive table overflow */
+        .table-responsive {
+            overflow-x: auto; /* Allows horizontal scrolling on small screens */
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 p-4">
+    <div class="article-container">
+        <div class="relative">
+            <p class="page-number">--- PAGE 1 ---</p>
+            <div class="text-center mb-8">
+                <h1 class="text-3xl font-bold mb-2">نمذجة ومحاكاة الانجراف الحراري لحساس الأس الهيدروجيني القائم على ISFET وتعويضه باستخدام تقنيات التعلم الآلي</h1>
+                <p class="text-lg text-gray-600">مقالة في المجلة الدولية لنظرية وتطبيقات الدوائر مارس 2019</p>
+                <p class="text-sm text-gray-500">0101002/18 2018</p>
+            </div>
+
+            <div class="header-info">
+                <div>
+                    <p class="text-sm text-gray-700">ResearchGate</p>
+                    <a href="https://www.researchgate.net/publication/332110285" class="text-blue-600 hover:underline text-sm">
+                        انظر المناقشات والإحصائيات وملفات تعريف المؤلفين لهذا المنشور على: https://www.researchgate.net/publication/332110285
+                    </a>
+                </div>
+                <div class="citations-reads text-left">
+                    <p class="font-semibold text-lg">الاستشهادات</p>
+                    <p class="text-2xl font-bold text-blue-700">38</p>
+                    <p class="font-semibold text-lg mt-2">القراءات</p>
+                    <p class="text-2xl font-bold text-blue-700">1,568</p>
+                </div>
+            </div>
+
+            <p class="text-md font-semibold mt-6">6 مؤلفين، بما في ذلك:</p>
+            <ul class="author-list text-md">
+                <li>
+                    <p class="font-medium">ريشاب بهاردواج (Rishabh Bhardwaj)</p>
+                    <p class="text-sm text-gray-600">جامعة سنغافورة للتكنولوجيا والتصميم</p>
+                    <p class="text-sm text-gray-500">46 منشور 488 استشهاد</p>
+                    <a href="#" class="text-blue-600 hover:underline text-sm">انظر الملف الشخصي</a>
+                </li>
+                <li class="mt-4">
+                    <p class="font-medium">سوميندو سينها (Soumendu Sinha)</p>
+                    <p class="text-sm text-gray-600">معهد أبحاث الهندسة الإلكترونية المركزي</p>
+                    <p class="text-sm text-gray-500">49 منشور 1,045 استشهاد</p>
+                    <a href="#" class="text-blue-600 hover:underline text-sm">انظر الملف الشخصي</a>
+                </li>
+                <li class="mt-4">
+                    <p class="font-medium">نيشاد ساهو (Nishad Sahu)</p>
+                    <p class="text-sm text-gray-600">جامعة كارنيجي ميلون</p>
+                    <p class="text-sm text-gray-500">16 منشور 547 استشهاد</p>
+                    <a href="#" class="text-blue-600 hover:underline text-sm">انظر الملف الشخصي</a>
+                </li>
+            </ul>
+
+            <p class="text-sm text-gray-500 mt-6">تم تحميل جميع المحتويات التالية لهذه الصفحة بواسطة سوميندو سينها في 08 سبتمبر 2021.</p>
+            <p class="text-sm text-gray-500 mt-2">طلب المستخدم تحسين الملف الذي تم تنزيله.</p>
+
+            <ul class="author-list text-md mt-6">
+                <li>
+                    <p class="font-medium">ساجنيك ماجومدر (Sagnik Majumder)</p>
+                    <p class="text-sm text-gray-600">جامعة تكساس في أوستن</p>
+                    <p class="text-sm text-gray-500">32 منشور 663 استشهاد</p>
+                    <a href="#" class="text-blue-600 hover:underline text-sm">انظر الملف الشخصي</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="page-break relative mt-12">
+            <p class="page-number">--- PAGE 2 ---</p>
+            <div class="wiley-header">
+                <span class="wiley-text">WILEY</span>
+                <span class="page-num">1</span>
+            </div>
+
+            <p class="text-sm text-gray-600 mb-1">تم الاستلام: 9 نوفمبر 2018</p>
+            <p class="text-sm text-gray-600 mb-1">تم المراجعة: 21 يناير 2019</p>
+            <p class="text-sm text-gray-600 mb-1">تم القبول: 24 يناير 2019</p>
+            <p class="text-sm text-gray-600 mb-4">رقم معرف الكائن الرقمي (DOI): 10.1002/cta.2618</p>
+
+            <h2 class="section-heading text-xl font-bold text-center">مقالة بحثية</h2>
+            <h2 class="text-2xl font-bold text-center mb-6">نمذجة ومحاكاة الانجراف الحراري لحساس الأس الهيدروجيني القائم على ISFET وتعويضه باستخدام تقنيات التعلم الآلي</h2>
+
+            <p class="text-md font-medium text-center mb-4">
+                ريشاب بهاردواج¹ | سوميندو سينها²،³ | نيشاد ساهو⁴ | ساجنيك ماجومدر⁵ | براتيك نارانج¹ | رافيندرا موخيا²،³
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm mb-6">
+                <div>
+                    <p class="font-semibold">تكنولوجيا وتصميم نظم المعلومات، جامعة سنغافورة للتكنولوجيا والتصميم، سنغافورة، سنغافورة</p>
+                </div>
+                <div>
+                    <p class="font-semibold">منطقة المستشعرات الذكية، CSIR - معهد أبحاث الهندسة الإلكترونية المركزي، بيلاني، الهند</p>
+                </div>
+                <div>
+                    <p class="font-semibold">CSIR-CEERI، أكاديمية البحث العلمي والابتكاري، غازي آباد، الهند</p>
+                </div>
+                <div>
+                    <p class="font-semibold">قسم الهندسة الكهربائية والإلكترونية، معهد بيرلا للتكنولوجيا والعلوم، بيلاني، الهند</p>
+                </div>
+                <div>
+                    <p class="font-semibold">مركز الحوسبة والإدراك، جامعة غوته في فرانكفورت، فرانكفورت، ألمانيا</p>
+                </div>
+                <div>
+                    <p class="font-semibold">"قسم علوم الكمبيوتر ونظم المعلومات، معهد بيرلا للتكنولوجيا والعلوم، بيلاني، الهند</p>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <p class="font-semibold">مراسلات</p>
+                <p class="text-sm">سوميندو سينها، منطقة المستشعرات الذكية، CSIR-CEERI، بيلاني 333031، الهند.</p>
+                <p class="text-sm">البريد الإلكتروني: <a href="mailto:soumendu@ceeri.res.in" class="text-blue-600 hover:underline">soumendu@ceeri.res.in</a></p>
+            </div>
+
+            <div class="mb-6">
+                <p class="font-semibold">العنوان الحالي</p>
+                <p class="text-sm">سوميندو سينها، منطقة المستشعرات الذكية، CSIR-CEERI، بيلاني، 333031</p>
+            </div>
+
+            <div class="mb-6">
+                <p class="font-semibold">معلومات التمويل</p>
+                <p class="text-sm">مجلس البحث العلمي والصناعي، الهند</p>
+            </div>
+
+            <div class="abstract-section">
+                <h3 class="font-bold text-lg mb-2">ملخص</h3>
+                <p class="text-sm leading-relaxed">
+                    تقدم الورقة نمذجة ومحاكاة حساس الأس الهيدروجيني القائم على ترانزستور تأثير المجال الحساس للأيونات (ISFET) بنموذج ماكرو سلوكي يعتمد على درجة الحرارة، وتقترح تعويض الانجراف الحراري في المستشعر باستخدام نماذج التعلم الآلي الذكية (ML). تم بناء نموذج الماكرو باستخدام SPICE عن طريق إدخال المعاملات الكهروكيميائية في نموذج ترانزستور تأثير المجال من أكسيد المعدن وأشباه الموصلات (MOSFET) لمحاكاة خصائص ISFET. نحن نأخذ في الاعتبار اعتماد درجة الحرارة للمعاملات الكهروكيميائية وأشباه الموصلات في نموذج الماكرو الخاص بنا لزيادة متانته. ثم يتم تصدير نموذج الماكرو كعنصر دائرة فرعية، والذي يستخدم لتصميم دائرة واجهة القراءة. يتم استخدام طوبولوجيا بسيطة للجهد الثابت، التيار الثابت (CVCC) لتوليد بيانات الانجراف الحراري في مستشعر الأس الهيدروجيني ISFET، والتي تستخدم لتدريب واختبار نماذج الانحدار القائمة على التعلم الآلي الحديثة من أجل تعويض سلوك الانجراف. توضح النتائج التجريبية أن تقنية الغابات العشوائية (RF) تحقق أفضل أداء مع ارتباط عالٍ جدًا ومعدل خطأ منخفض. تظهر المنحنيات المقابلة لإشارة الإخراج باستخدام النماذج المدربة خصائص مستقلة عن درجة الحرارة بشكل كبير عند اختبارها للأس الهيدروجيني 2، 4، 7، 10، و 12، وحصلنا على تباين في الخطأ التربيعي المتوسط (RMS) بقيمة $\Delta pH\le0.024$ على مدى درجة حرارة تتراوح من $15^{\circ}C$ إلى $55^{\circ}C$ مقارنة بـ $\Delta pH\le1.34\epsilon$ لإشارة الإخراج غير المعوضة. يؤسس هذا العمل الإطار لدمج تقنيات التعلم الآلي لتعويض انجراف مستشعر ISFET الكيميائي لتحسين أدائه.
+                </p>
+                <p class="keywords mt-4">
+                    <strong>الكلمات المفتاحية:</strong> شجرة القرار، تعويض الانجراف، ISFET، التعلم الآلي، perceptron متعدد الطبقات، الانحدار متعدد الحدود، الغابات العشوائية، ROIC، SPICE، انحدار متجه الدعم
+                </p>
+                <p class="text-xs text-gray-500 mt-2">
+                    [تم إضافة تصحيح في 16 أبريل 2019، بعد النشر الأول عبر الإنترنت: تم تحديث معلومات التمويل.]
+                    الاختصارات: CEERI، معهد أبحاث الهندسة الإلكترونية المركزي.
+                </p>
+                <p class="text-xs text-gray-500">
+                    Int J Circ Theor Appl. 2019;1-17.
+                </p>
+                <p class="text-xs text-gray-500">
+                    <a href="https://wileyonlinelibrary.com/journal/cta" class="text-blue-600 hover:underline">wileyonlinelibrary.com/journal/cta</a>
+                </p>
+                <p class="text-xs text-gray-500">
+                    © 2019 جون وايلي وأولاده المحدودة.
+                </p>
+            </div>
+        </div>
+
+        <div class="page-break relative mt-12">
+            <p class="page-number">--- PAGE 3 ---</p>
+            <div class="wiley-header">
+                <span class="wiley-text">-WILEY-</span>
+                <span class="page-num">2</span>
+            </div>
+            <p class="text-sm text-gray-700 text-left">بهاردواج وآخرون</p>
+
+            <h2 class="section-heading">1 مقدمة</h2>
+            <p class="text-md leading-relaxed mb-4">
+                لقد شهدت تقنية الترانزستور ذو التأثير الحقلي الحساس للأيونات (ISFET)، التي اخترعها ب. بيرغفيلد في عام 1970، تحسينات كبيرة على مدى العقود القليلة الماضية. التطبيق الأساسي لـ ISFETs هو في استشعار الأس الهيدروجيني، وهو بمثابة بديل للأقطاب الكهربائية الانتقائية الأيونية التقليدية. ويتمتع بمزايا كبيرة على أقطاب زجاج الأس الهيدروجيني التقليدية مثل التكلفة المنخفضة، والطاقة المنخفضة، والحجم الصغير، والاستجابة السريعة والتصنيع، والبساطة. وهو يحظى باهتمام متزايد في مجالات مختلفة مثل التطبيقات الطبية الحيوية والبيئية. كما أنه يعمل كمنصة تكنولوجية للاستشعار الكيميائي/الكيميائي الحيوي. وقد استخدم لقياس تركيز أيونات مختلفة مثل $Na^{+}$، $K^{+}$، في مادة تحليلية، وكذلك للاستشعار الحيوي الخالي من العلامات، مع تعديل مناسب لسطح الفيلم الاستشعاري. ومع ذلك، يعاني الجهاز من عدم المثالية مثل الانجراف الحراري، والتخلفية، والحساسية غير الخطية. يعتمد أداء الجهاز بشكل كبير على مادة الفيلم الاستشعاري المستخدمة. وقد تم معالجة عدم المثالية التي تشمل التخلفية وعدم الخطية بشكل كبير باستخدام أفلام استشعار مثل $Si_{3}N_{4}$، $Al_{2}O_{3}$ و $Ta_{2}O_{5}$. ومع ذلك، فإن الانجراف الحراري في الجهاز ناتج عن عدة عوامل. نظرًا لأنه جهاز كهروكيميائي، فإن اعتماد المعاملات الكهروكيميائية على درجة الحرارة يؤثر على الناتج الكهربائي، بالإضافة إلى خصائص تيار القناة التي تعتمد على درجة الحرارة في طبقة أشباه الموصلات. وقد استخدمت تقنيات مختلفة في الماضي لتقليل الانجراف الحراري في الجهاز من خلال الابتكارات في تصميم الدوائر وكذلك تصميم النظام، مما يؤدي إلى تعقيد إضافي في النظام. يعد تطور تقنيات التعلم الآلي بتبسيط قراءة المستشعر المعوض عن الانجراف الحراري دون الحاجة إلى إدخال أنظمة فرعية معقدة. أصبح التعلم الآلي (ML) جزءًا أساسيًا من تصميم المستشعرات نظرًا لطبيعته التكيفية، مما يجعله قويًا لتطبيقات قراءة المستشعر. وهو العنصر الأساسي للذكاء الاصطناعي الذي تحصل بموجبه أجهزة الكمبيوتر على وضع التعلم دون أن يتم برمجتها بشكل صريح. تتطلب عملية التعلم مجموعة من البيانات التي يمكن تصنيفها (التعلم الخاضع للإشراف)، أو غير مصنفة (التعلم غير الخاضع للإشراف)، أو مصنفة جزئيًا (التعلم شبه الخاضع للإشراف). وبالتالي، يمكن استخدامه لتحديد الوظيفة التقريبية التي تصف العلاقة بين المدخلات والمخرجات. لا يزال استخدام تقنيات التعلم الآلي للاستشعار الكيميائي في مرحلة ناشئة، ونحن نقترح منهجية لدمج تقنيات التعلم الآلي مع مستشعر الأس الهيدروجيني ISFET لتحسين أدائه. في هذه الورقة، نقترح تبني تقنيات تعلم آلي مختلفة لتطوير آلية قراءة غير حساسة لدرجة الحرارة لمستشعر الأس الهيدروجيني ISFET. يتكون النظام المقترح من نموذج ماكرو سلوكي ISFET مبني باستخدام أداة SPICE التجارية، والذي يعمل كعنصر دائرة فرعية في دائرة قراءة المستشعر ونموذج تعلم آلي لتعويض الانجراف الحراري. نماذج SPICE ماكرو المقترحة في الماضي لا تتضمن الاعتماد التفصيلي على درجة الحرارة للمعاملات الكهروكيميائية وأشباه الموصلات. في هذا العمل، قمنا بتضمين السلوك المعتمد على درجة الحرارة للمعاملات الكهروكيميائية مثل جهد القطب المرجعي، وثوابت التفكك عند واجهة الإلكتروليت والعازل، والمعاملات الكيميائية في المحلول، ومعاملات MOS في نموذج ماكرو SPICE. ثم يتم استيراد نموذج ماكرو SPICE كعنصر دائرة فرعية لتطوير دائرة قراءة بسيطة للجهد الثابت والتيار الثابت (CVCC). علاوة على ذلك، تم تدريب واختبار خوارزميات تعلم آلي متعددة باستخدام البيانات التي تم إنشاؤها من دائرة واجهة قراءة ISFET (ROIC) لمحاليل الأس الهيدروجيني المختلفة في ظروف درجة حرارة محيطة مختلفة. استطاعت نماذج التعلم الآلي الخاصة بنا تحقيق إشارات خرج مستقلة عن درجة الحرارة بشكل ملحوظ مع معدلات خطأ منخفضة جدًا. يوسع هذا العمل بشكل كبير النتائج الأولية التي حصل عليها المؤلفون في دراستهم السابقة حيث تم إهمال اعتماد المعاملات الكهروكيميائية على درجة الحرارة واستخدمت خوارزمية شبكة عصبية اصطناعية بسيطة (ANN) لتعويض الانجراف الحراري.
+            </p>
+            <p class="text-md leading-relaxed mb-4">
+                تنظيم هذه الورقة كما يلي: يقدم القسم 2 نظرة عامة على نظرية ISFET واعتماد درجة الحرارة للمعاملات المختلفة. يقدم القسم 3 صياغة نموذج الماكرو SPICE لنمذجة الانجراف الحراري ودارة الواجهة الخاصة به. يناقش القسم 4 تقنيات التعلم الآلي المستخدمة في هذا العمل ومقاييس أدائها. يناقش القسم 5 المنهجية المستخدمة لتدريب نماذج التعلم الآلي والحصول على إشارة الخرج المعوضة عن الانجراف الحراري للتنبؤ بقيمة الأس الهيدروجيني لمحلول غير معروف. يعرض القسم 6 النتائج التي تم الحصول عليها من نتائج محاكاة SPICE لنموذج الماكرو SPICE، ومخرجات ROIC المعتمدة على درجة الحرارة، وتعويض الانجراف الحراري لتقنيات التعلم الآلي المختلفة ومقاييس أدائها. أخيرًا، نختتم في القسم 7.
+            </p>
+
+            <h2 class="section-heading">2 ترانزستور تأثير المجال الحساس للأيونات</h2>
+            <p class="text-md leading-relaxed mb-4">
+                إن ISFET مشابه جدًا لترانزستور تأثير المجال من أكسيد المعدن وأشباه الموصلات (MOSFET)، باستثناء عدم وجود قطب البوابة ومخطط التعبئة. يوضح الشكل 1 المنظر التخطيطي لـ ISFET تقليدي. عملية تصنيع ISFET مشابهة لعملية التنظيم الذاتي المستخدمة لـ MOSFET تقليدي. ومع ذلك، لا يتم ترسيب قطب البوابة ولا يتم تغليف منطقة البوابة. يسمح هذا للإلكتروليت بالتفاعل مع عازل البوابة مما يؤدي إلى شحنات سطحية عند غمر الجهاز في محلول تحليلي مثير للاهتمام. يتم استخدام قطب مرجعي لتوفير الجهد
+            </p>
+        </div>
+
+        <div class="page-break relative mt-12">
+            <p class="page-number">--- PAGE 4 ---</p>
+            <div class="wiley-header">
+                <span class="wiley-text">-WILEY-</span>
+                <span class="page-num">3</span>
+            </div>
+            <p class="text-sm text-gray-700 text-left">بهاردواج وآخرون</p>
+
+            <img src="https://placehold.co/600x300/e0e0e0/000000?text=ISFET+Schematic" alt="رسم تخطيطي لـ ISFET" class="figure-image">
+            <p class="figure-caption">الشكل 1: منظر تخطيطي لترانزستور تأثير المجال الحساس للأيونات (ISFET) [يمكن رؤية الشكل الملون على wileyonlinelibrary.com]</p>
+
+            <p class="text-md leading-relaxed mb-4">
+                إلى الإلكتروليت ويقوم بتعديل تيار القناة. بالإضافة إلى ذلك، يتم تنمية طبقة استشعار فوق أكسيد البوابة لتحسين خصائص الجهاز. تقوم الطبقة الاستشعارية، مثل $Si_{3}N_{4}$، $Al_{2}O_{3}$، و $Ta_{2}O_{5}$، باكتشاف التغير في تركيز الأيونات في المحلول. تحتوي الطبقة الاستشعارية التي تتلامس مع المحلول على مواقع amphoteric، وهي مواقع السيلانول ومواقع الأمين الأولية، التي يمكنها قبول أو التبرع بالبروتونات، مما يؤدي إلى شحنة سطحية. كثافة الشحنة عند واجهة الإلكتروليت-العازل تحكمها نموذج ربط المواقع. كثافة الشحنة السطحية هي دالة للأس الهيدروجيني للمحلول، وكثافة المواقع السطحية amphoteric، وثوابت التفكك لتفاعلات البروتونات وإزالة البروتونات. تعتمد قيم كثافة المواقع السطحية وثوابت التفكك المرتبطة بها على العازل المستخدم كمادة استشعار. تؤدي الشحنة عند واجهة الإلكتروليت-العازل إلى طبقة مزدوجة كهربائية في المحلول تحكمها نموذج غوي-تشابمان-ستيرن. تحتوي الطبقة المزدوجة الكهربائية على سعة ستيرن (طبقة هيلمهولتز)، والتي تتكون من شحنات أيونية ممتصة على سطح العازل وسعة طبقة منتشرة (طبقة غوي-تشابمان)، والتي تتكون من طبقة من الأيونات المذابة التي لديها أقرب قرب من واجهة الإلكتروليت-العازل. يتم توضيح التعبيرات لهذه المعلمات الكهروكيميائية في القسم التالي، حيث نقوم بتضمين هذه المعلمات الكهروكيميائية في نموذج ISFET ماكرو. يؤدي تراكم الشحنة الإيجابية أو السلبية الصافية على السطح الحساس للأيونات إلى تحول في جهد العتبة ($V_{TH}$) في الترانزستور، بسبب توليد جهد سطحي يعدل المجال الكهربائي عند واجهة أشباه الموصلات-العازل. يمكن استخدام هذا التغير المميز في $V_{TH}$ لتحويل التغير في تركيز الأيونات إلى إشارة كهربائية قابلة للقياس. لغرض نمذجة ومحاكاة ISFET، اعتبرنا جهازًا من نوع n-channel يتم تصنيعه افتراضيًا في رقاقة Si من نوع p-type <100> بمقاومة صفائحية تبلغ 10-20 Ω سم. تتم مناقشة معلمات العملية المستخدمة لنمذجة الجهاز في القسم التالي. المعادلات الحاكمة لتيار المصرف $I_{DS}$ وجهد العتبة $V_{TH}$ لـ ISFET هي كالتالي:¹
+            </p>
+            <p class="text-md leading-relaxed text-center mb-2">
+                $I_{DS}=\mu_{n}C_{ox}\frac{W}{L}[(V_{GS}-V_{TH})-\frac{V_{DS}}{2}]V_{DS},$ (1)
+            </p>
+            <p class="text-md leading-relaxed mb-4">
+                حيث $\mu_{n}=$ حرية الإلكترون، $C_{ox}=$ سعة الأكسيد لكل وحدة مساحة، $W=$ عرض القناة، $L=$ طول القناة، $V_{GS}=$ جهد البوابة إلى المصدر، $V_{TH}=ISFET$ جهد العتبة، و $V_{DS}=$ جهد المصرف إلى المصدر.
+            </p>
+            <p class="text-md leading-relaxed text-center mb-2">
+                $V_{TH}=E_{ref}-\psi_{o}+\chi^{sol}-\frac{\Phi_{Si}}{q}-\frac{Q_{ss}+Q_{ox}+Q_{B}}{C_{ox}}+2\phi_{F}$ . (2)
+            </p>
+            <p class="text-md leading-relaxed mb-4">
+                حيث $E_{ref}$ جهد القطب المرجعي (بالنسبة للفراغ)؛ $\Psi_{0}$: جهد السطح؛ $X^{sol};$ جهد ثنائي القطب السطحي للمحلول؛ $\Phi_{Si}$ دالة العمل للسليكون؛ q: الشحنة الأولية؛ $Q_{ss}+Q_{ox}+Q_{B}$: الشحنة المتراكمة عند واجهة أكسيد السليكون، في الأكسيد، وشحنة النضوب في السليكون، على التوالي؛ و $\phi_{F}$ جهد فيرمي.
+            </p>
+
+            <h3 class="subsection-heading">2.1 اعتماد خصائص ISFET على درجة الحرارة</h3>
+            <p class="text-md leading-relaxed mb-4">
+                تعتمد معلمات أكسيد المعدن وأشباه الموصلات (MOS) والمعلمات الكهروكيميائية المذكورة أعلاه على درجة الحرارة. يمكن تصنيف المعلمات المعتمدة على درجة الحرارة إلى ثلاثة أجزاء:
+            </p>
+
+            <h4 class="subsection-heading text-lg">2.1.1 اعتماد مصطلحات القطب المرجعي على درجة الحرارة</h4>
+            <p class="text-md leading-relaxed mb-4">
+                يُذكر جهد القطب المرجعي على النحو التالي:
+            </p>
+            <p class="text-md leading-relaxed text-center mb-2">
+                $E_{ref}(T)=E_{abs}(\frac{H^{+}}{H_{2}})+E_{ref}(\frac{Ag}{AgCl})+(\frac{dE_{ref}}{dT})\times(T-298.16)V$ , (3)
+            </p>
+        </div>
+
+        <div class="page-break relative mt-12">
+            <p class="page-number">--- PAGE 5 ---</p>
+            <div class="wiley-header">
+                <span class="wiley-text">-WILEY-</span>
+                <span class="page-num">4</span>
+            </div>
+            <p class="text-sm text-gray-700 text-left">بهاردواج وآخرون</p>
+
+            <p class="text-md leading-relaxed mb-4">
+                حيث $E_{abs}(H^{+}/H_{2})$ هو جهد الهيدروجين المعاير و $E_{ref}(Ag/AgCl)$ هو الجهد النسبي للقطب المرجعي. هذان الجهدان لا يعتمدان على درجة الحرارة وقد تم الإبلاغ عن قيمتهما في الأدبيات كـ 4.7 و 0.205 فولت، على التوالي. القيمة المرصودة تجريبياً لمعامل درجة الحرارة هي $140~\mu~V/K.^{36}$ القيم المبلغ عنها تجريبياً لجهد قطب الهيدروجين هي 4.73 فولت بواسطة غومر وترايسون، 4.7 فولت بواسطة هانسن وكولب، و 4.74 فولت بواسطة بوس. نظرًا لأن القيم متساوية تقريبًا، فقد تم افتراض أنها 4.7 فولت. وبالتالي، فإن معادلة جهد القطب المرجعي تُعطى على النحو التالي:
+            </p>
+            <p class="text-md leading-relaxed text-center mb-2">
+                $E_{ref}=4.905+1.4\times10^{-4}\times(T-298.16)V.$ (4)
+            </p>
+            <p class="text-md leading-relaxed mb-4">
+                هذه المعاملات لا تتأثر بالتقنية المستخدمة لتصنيع الترانزستور لأنها تعتمد فقط على سلوك القطب المرجعي، والذي لا يعتمد على تقنية تصنيع الترانزستور. وبالتالي، لا تؤثر أي من معلمات الجهاز على اعتمادها على درجة الحرارة والجهد الكهربائي، بل هي دالة فقط على محلول المخزن المؤقت ومادة القطب الكهربائي. هنا، يتم إهمال مساهمة جهد الوصلة السائلة بسبب اعتمادها الضعيف على درجة الحرارة. بالنسبة لجهد وصلة سائلة نموذجي يبلغ 3 مللي فولت، فإن قيمة معامل درجة الحرارة الخاصة بها تبلغ $10~\mu~V/K,^{19}$ وهو أمر غير مهم مقارنة بأي مصطلح آخر يعتمد على درجة الحرارة.
+            </p>
+
+            <h4 class="subsection-heading text-lg">2.1.2 اعتماد مصطلحات واجهة الإلكتروليت-العازل على درجة الحرارة</h4>
+            <p class="text-md leading-relaxed mb-4">
+                جهد السطح هو المصطلح المهيمن الذي يؤدي إلى تحول في جهد العتبة. بالنسبة إلى $(K_{b}/K_{a})\ll1.$، يمكن كتابة تعبيره على النحو التالي:
+            </p>
+            <p class="text-md leading-relaxed mb-4">
+                حيث $pH_{pzc}$ هو الأس الهيدروجيني عند نقطة الشحنة الصفرية، و $\beta$ هي سعة المخزن المؤقت الجوهرية كما هو موضح بواسطة:
+            </p>
+            <p class="text-md leading-relaxed text-center mb-2">
+                $\psi_{o}=2.303\frac{kT}{q}\frac{\beta}{\beta+1}(pH_{pzc}-pH),$ (5)
+            </p>
+            <p class="text-md leading-relaxed text-center mb-2">
+                $\beta=\frac{2qN_{s}\frac{K_{b}}{K_{a}}^{0.5}}{kTC_{DL}},$ (6)
+            </p>
+            <p class="text-md leading-relaxed mb-4">
+                حيث $N_{s}$ هو كثافة الموقع السطحي، $k$ هو ثابت بولتزمان، و $C_{DL}$ هي سعة الطبقة المزدوجة.
+            </p>
+            <p class="text-md leading-relaxed mb-4">
+                يجب ملاحظة أن ثوابت التفكك لتفاعلات البروتون وإزالة البروتون تعتمد أيضًا على درجة الحرارة على النحو التالي:
+            </p>
+            <p class="text-md leading-relaxed text-center mb-2">
+                $K_{a,b}(T)=K_{a,b}(T_{o})\times exp(C_{a,b}(\frac{1}{T}-\frac{1}{T_{o}}))\times(\frac{T}{T_{o}})^{D_{a,b}}$. (7)
+            </p>
+            <p class="text-md leading-relaxed mb-4">
+                حيث $C_{a,b}$ و $D_{a,b}$ و $K_{a,b}(T_{o})$ هي معاملات ثابتة.
+            </p>
+            <p class="text-md leading-relaxed mb-4">
+                تعتمد قيمة $\chi^{sol}$ على القوة الأيونية، $I_{os}$ و T كما هو موضح بـ:
+            </p>
+            <p class="text-md leading-relaxed text-center mb-2">
+                $\chi^{sol}=0.05[1-exp(0.86log(I_{os}))]\times[1-0.008(T-298.16)]$ فولت. (8)
+            </p>
+
+            <h4 class="subsection-heading text-lg">2.1.3 اعتماد معلمات MOS على درجة الحرارة</h4>
+            <p class="text-md leading-relaxed mb-4">
+                تعتمد العديد من معلمات أشباه الموصلات على درجة الحرارة، وهي: جهد فيرمي ($\phi_{f}$)، الممانعة ($\mu$)، فجوة الطاقة ($E_{G}$)، تركيز الناقلات الذاتية ($n_{i}$), كثافة الحالات ($N_{c},N_{v}$), إلخ. ندرج بعض المعلمات الرئيسية التي تؤثر على جهد العتبة وتيار التصريف للترانزستور.
+            </p>
+            <p class="text-md leading-relaxed text-center mb-2">
+                $\phi_{f}=\frac{kT}{q}\times ln(\frac{N_{a}}{n_{i}})V,$ (9)
+            </p>
+            <p class="text-md leading-relaxed text-center mb-2">
+                $n_{i}=\sqrt{N_{c}N_{v}}\times exp(\frac{-E_{G}}{2kT})cm^{-3}$ , (10)
+            </p>
+            <p class="text-md leading-relaxed text-center mb-2">
+                $E_{G}=[1.17-(\frac{4.73\times10^{-4}\times T^{2}}{T+636})]eV,$ (11)
+            </p>
+            <p class="text-md leading-relaxed text-center mb-2">
+                $N_{c}=2\times[\frac{2\pi m_{n}kT}{h^{2}}]^{1.5}cm^{-3},$ (12)
+            </p>
+            <p class="text-md leading-relaxed text-center mb-2">
+                $N_{v}=2\times[\frac{2\pi m_{p}kT}{h^{2}}]^{1.5}cm^{-3},$ (13)
+            </p>
+        </div>
+
+        <div class="page-break relative mt-12">
+            <p class="page-number">--- PAGE 6 ---</p>
+            <div class="wiley-header">
+                <span class="wiley-text">-WILEY-</span>
+                <span class="page-num">5</span>
+            </div>
+            <p class="text-sm text-gray-700 text-left">بهاردواج وآخرون</p>
+
+            <div class="flex flex-col md:flex-row justify-center items-center gap-4 mb-8">
+                <img src="https://placehold.co/300x150/e0e0e0/000000?text=ISFET+Macromodel" alt="نموذج ISFET ماكرو" class="figure-image w-full md:w-1/2">
+                <img src="https://placehold.co/300x150/e0e0e0/000000?text=Electrochemical+Model" alt="نموذج كهروكيميائي" class="figure-image w-full md:w-1/2">
+            </div>
+            <p class="figure-caption">الشكل 2: نمذجة ترانزستور تأثير المجال الحساس للأيونات (ISFET): أ، SPICE؛ ب، كهروكيميائي [يمكن رؤية الشكل الملون على wileyonlinelibrary.com]</p>
+
+            <p class="text-md leading-relaxed mb-4">
+                حيث $m_{n}=$ الكتلة الفعالة للإلكترون، $m_{p}=$ الكتلة الفعالة للثقوب، $h=$ ثابت بلانك، و $N_{a}=$ تركيز شوائب المانح.
+            </p>
+            <p class="text-md leading-relaxed text-center mb-2">
+                $\mu(T)=\mu_{o}/(1+U_{a}E_{eff}^{1/3})(T/300)+U_{b}(T/300)^{-1/2}\times E_{eff}^{2}(1+U_{k1}V_{bb})+[U_{e0}TE_{eff}^{-2}+U_{c1}(300/T)E_{eff}^{-1})(1+U_{k2}V_{bs})]^{-1},$ (14)
+            </p>
+            <p class="text-md leading-relaxed mb-4">
+                حيث $E_{eff}$ هو متوسط المجال الكهربائي العرضي في قناة MOSFET وتكون المعاملات $U_{a}$, $U_{b}$, $U_{cf}$, $U_{c1}$, $U_{k1}$, و $U_{k2}$ مستقلة عن $E_{eff}$, ولكن قد يكون لها اعتماد ضعيف على درجة الحرارة يمكن تجاهله. $\mu_{o}$ هي قابلية حركة الإلكترون عند $T=300$ كلفن. للحصول على وصف تفصيلي لاعتماد قابلية الحركة على درجة الحرارة، ينصح القراء بالرجوع إلى نيو وآخرين.
+            </p>
+            <p class="text-md leading-relaxed mb-4">
+                تم حساب معاملات المعادلتين 6 و 13 باستخدام تحليل الانحدار عن طريق استخراج المعلمات من القيم المبلغ عنها سابقًا. تم الاستخراج باستخدام تطبيق WebPlotDigitizer وأداة مطابقة المنحنيات في MATLAB باستخدام تقريب المربعات الصغرى غير الخطية. وتجدر الإشارة أيضًا إلى أن قيمة الأس الهيدروجيني نفسها دالة لدرجة الحرارة بسبب التباين في ثابت تأين الماء مع درجة الحرارة.
+            </p>
+
+            <h2 class="section-heading">3 نموذج ISFET ماكرو مع الانجراف الحراري ودائرة واجهته</h2>
+            <p class="text-md leading-relaxed mb-4">
+                لقد تم نمذجة ISFET باستخدام أدوات SPICE التجارية في الماضي، والتي تتضمن إدخال معلمات كهروكيميائية في نماذج MOSFET المدمجة الموجودة في الأداة. نحتاج إلى اعتبار ISFET كمرحلتين منفصلتين تمامًا، أي مرحلة كهروكيميائية تتكون من واجهة إلكتروليت-عازل ومرحلة إلكترونية تتكون من MOSFET. ومع ذلك، فإن النموذج الذي تم الإبلاغ عنه سابقًا لا يأخذ في الاعتبار بدقة الانجراف الحراري للمعلمات المختلفة التي تم إدخالها في نموذج الماكرو. في هذا العمل، تم تطوير نموذج ماكرو شامل في SPICE عن طريق إدخال اعتماد درجة الحرارة للمعلمات الكهروكيميائية وشبه الموصلات المختلفة، والتي تم تقريبها في العمل المبلغ عنه سابقًا. يتكون نموذج ماكرو ISFET من خمسة أطراف، وهي التصريف (D)، المصدر (S)، الجسم (B)، جهد المرجع (ref)، وإدخال الأس الهيدروجيني (pH) كما هو موضح في الشكل 2A. طرف الأس الهيدروجيني هو طرف جهد الدخل الذي يتم تعيينه خطيًا للأس الهيدروجيني للمحلول. يتم توصيل جهد المرجع بطرف البوابة للمرحلة الإلكترونية عبر مكثفات الطبقة المزدوجة التي تتكون من مكثف هيلمهولتز ومكثف الطبقة المنتشرة¹ كما هو موضح في الشكل 2B. تم إدخال المعادلات التحليلية المعتمدة على درجة الحرارة التي نوقشت في القسم السابق في نموذج السلوك ماكرو. يتم سرد المعلمات لنموذج الماكرو في الجدول 1. يتم استخراج معلمات نموذج ISFET ماكرو من الأجهزة المصنعة في مختبر المؤلف. يتم الحصول عليها من توصيف الجهاز لهياكل اختبار MOSFET ويتم التحقق منها باستخدام محاكاة العمليات المقابلة التي تم إجراؤها في أداة Silvaco TCAD باستخدام وحدة Athena. يتم وصف المعادلات التحليلية المستخدمة للعناصر الكهروكيميائية أدناه. يُعطى التعبير عن كثافة الشحنة السطوحية بواسطة:
+            </p>
+            <p class="text-md leading-relaxed text-center mb-2">
+                $\tau_{o}=qN_{sll}(\frac{a_{H_{z}^{+}}^{2}-K_{a}K_{b}}{K_{a}K_{b}+K_{b}a_{H_{z}^{+}}+a_{H_{z}^{+}}^{2}})+qN_{M_{Hll}(\frac{a_{H_{z}^{+}}}{a_{H_{z}^{+}}+K_{n}})$ (15)
+            </p>
+            <p class="text-md leading-relaxed mb-4">
+                المعلمات مدرجة في الجدول 2.
+            </p>
+        </div>
+
+        <div class="page-break relative mt-12">
+            <p class="page-number">--- PAGE 7 ---</p>
+            <div class="wiley-header">
+                <span class="wiley-text">-WILEY-</span>
+                <span class="page-num">6</span>
+            </div>
+            <p class="text-sm text-gray-700 text-left">بهاردواج وآخرون</p>
+
+            <div class="table-responsive mb-8">
+                <table class="w-full text-sm">
+                    <thead>
+                        <tr>
+                            <th class="text-right">ISFET</th>
+                            <th class="text-right">قيمة المعامل</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>العرض</td><td>$500~\mu m$</td></tr>
+                        <tr><td>الطول</td><td>$20~\mu m$</td></tr>
+                        <tr><td>سمك عازل البوابة</td><td>$150 Å$</td></tr>
+                        <tr><td>مقاومة الطبقة (منطقة المصدر/المصب)</td><td>$1.7~\Omega/square$</td></tr>
+                        <tr><td>شائبة الركيزة</td><td>$1.3E+15~cm^{-3}$</td></tr>
+                        <tr><td>عمق الوصلة</td><td>$1.2~\mu m$</td></tr>
+                        <tr><td>GAMMA</td><td>0.3</td></tr>
+                        <tr><td>الانتشار الجانبي</td><td>$0.96~\mu m$</td></tr>
+                        <tr><td>$K_{a}$</td><td>15.8</td></tr>
+                        <tr><td>$K_{b}$</td><td>63.1E-09</td></tr>
+                        <tr><td>$N_{sil}$</td><td>$4.5E18~m^{-2}$</td></tr>
+                        <tr><td>$N_{nit}$</td><td>$0.5E18~m^{-2}$</td></tr>
+                        <tr><td>$K_{n}$</td><td>$1.0E-10$</td></tr>
+                    </tbody>
+                </table>
+                <p class="table-caption">الجدول 1: قيم معاملات SPICE لمحاكاة ISFET</p>
+                <p class="text-xs text-gray-500 text-center">الاختصارات: ISFET، ترانزستور تأثير المجال الحساس للأيونات.</p>
+            </div>
+
+            <div class="table-responsive mb-8">
+                <table class="w-full text-sm">
+                    <thead>
+                        <tr>
+                            <th class="text-right">الرمز</th>
+                            <th class="text-right">المعامل</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>$\sigma_{0}$</td><td>كثافة الشحنة السطحية عند واجهة الإلكتروليت-العازل</td></tr>
+                        <tr><td>q</td><td>الشحنة الأولية</td></tr>
+                        <tr><td>$N_{sil}$</td><td>كثافة السطح لمواقع السيلانول</td></tr>
+                        <tr><td>$N_{nit}$</td><td>كثافة السطح لمواقع الأمين الأولية</td></tr>
+                        <tr><td>$a_{H_{3}^{+}}$</td><td>نشاط البروتونات بالقرب من واجهة الإلكتروليت-العازل</td></tr>
+                        <tr><td>$K_{a}$</td><td>ثابت التفكك لإزالة البروتونات عند موقع السيلانول</td></tr>
+                        <tr><td>$K_{b}$</td><td>ثابت التفكك للبروتونات عند موقع السيلانول</td></tr>
+                        <tr><td>$K_{n}$</td><td>ثابت التفكك لمواقع الأمين الأولية</td></tr>
+                    </tbody>
+                </table>
+                <p class="table-caption">الجدول 2: المعاملات الكهروكيميائية</p>
+            </div>
+
+            <p class="text-md leading-relaxed mb-4">
+                يمثل $a_{H_{3}^{+}}$ نشاط البروتونات بالقرب من واجهة الإلكتروليت-العازل، وهو مرتبط بنشاط تركيز البروتون السائبة من خلال معادلة بواسون-بولتزمان.
+            </p>
+            <p class="text-md leading-relaxed text-center mb-2">
+                $a_{H_{z}^{+}}=a_{H_{B}^{+}}exp(\frac{-q\psi_{o}}{kT})$ (16)
+            </p>
+            <p class="text-md leading-relaxed mb-4">
+                هنا، $a_{H_{B}^{+}}$ هو نشاط البروتون السائبة و $\Psi_{0}$ هو جهد واجهة الإلكتروليت-العازل. كما هو موضح في الشكل 2B، $C_{Helm}$ و $C_{Gouy}$ هما سعة هيلمهولتز وسعة الطبقة المنتشرة، على التوالي، ويعطيان بواسطة:
+            </p>
+            <p class="text-md leading-relaxed text-center mb-2">
+                $C_{Helm}=\frac{\epsilon_{IHP}\epsilon_{OHP}}{\epsilon_{IHP}d_{OHP}+\epsilon_{OHP}d_{IHP}}WL,$ (17)
+            </p>
+            <p class="text-md leading-relaxed text-center mb-2">
+                $C_{Gouy}=\frac{\sqrt{8\epsilon_{w}\epsilon_{o}kTC_{b}}}{2V_{T}}$ (18)
+            </p>
+            <p class="text-md leading-relaxed mb-4">
+                حيث $\epsilon_{OHP}$ و $\epsilon_{IHP}$ هما السماحيات النسبية لـ OHP و IHP، على التوالي، و $d_{OHP}$ و $d_{IHF}$ هما موضع مراكز الأيونات المائية والأيونات الممتزة، على التوالي. W و L هما عرض وطول بوابة الترانزستور. يتم تصدير نموذج الماكرو كعنصر دائرة فرعية ويستخدم لتصميم دائرة واجهة القراءة. يتم تحديد التغيير المعتمد على الأس الهيدروجيني في جهد العتبة لـ ISFET بواسطة وضع تشغيل CVCC. يوضح الشكل 3 دائرة الواجهة المقابلة المبنية باستخدام تقنية 180 نانومتر. في دائرة الواجهة، يتم توصيل المصباح والمصدر بمضخمات عمليات في وضع المخزن المؤقت للجهد والتغذية الراجعة السلبية، على التوالي، مع الحفاظ على الفولتية المقابلة ($V_{S}$ و $V_{D}$) ثابتة. وبالتالي، فإن $V_{DS}$ و IDs ($V_{S}/R_{S}$) ثابتان. وهذا يحافظ على $(V_{GS}-V_{T})$ ثابتًا في الترانزستور ويتم تعويض التغيير في جهد العتبة عن طريق تغيير في $V_{GS}$ والذي ينعكس كتغيير في $V_{Ref}$. يتم أخذ $V_{Ref}$ كخرج من ROIC ويستخدم كأحد المدخلات لمجموعة بيانات تدريب ML. تم تضمين نتائج محاكاة ROIC في القسم 6. تبديد الطاقة في دائرة القراءة
+            </p>
+        </div>
+
+        <div class="page-break relative mt-12">
+            <p class="page-number">--- PAGE 8 ---</p>
+            <div class="wiley-header">
+                <span class="wiley-text">-WILEY-</span>
+                <span class="page-num">7</span>
+            </div>
+            <p class="text-sm text-gray-700 text-left">بهاردواج وآخرون</p>
+
+            <img src="https://placehold.co/600x300/e0e0e0/000000?text=ISFET+SPICE+Circuit+Model" alt="نموذج دائرة ISFET SPICE" class="figure-image">
+            <p class="figure-caption">الشكل 3: نموذج دائرة SPICE لترانزستور تأثير المجال الحساس للأيونات (ISFET)</p>
+
+            <div class="table-responsive mb-8">
+                <table class="w-full text-sm">
+                    <thead>
+                        <tr>
+                            <th class="text-right">المعلمة</th>
+                            <th class="text-right">القيمة</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>كسب الحلقة المفتوحة</td><td>0.1 MV/V</td></tr>
+                        <tr><td>منتج عرض النطاق الترددي للكسب</td><td>10 ميجا هرتز</td></tr>
+                        <tr><td>معدل الانحدار</td><td>10 MV/ثانية</td></tr>
+                        <tr><td>مقاومة الدخل</td><td>500 ميجا أوم</td></tr>
+                    </tbody>
+                </table>
+                <p class="table-caption">الجدول 3: معلمات مكبر التشغيل</p>
+            </div>
+
+            <p class="text-md leading-relaxed mb-4">
+                الدائرة 48.05 ميلي واط تم حسابها عند $T=55^{\circ}C$ و $pH=0$ حيث يتم سحب الحد الأقصى للتيار من مصدر الطاقة. معلمات مكبر التشغيل مدرجة في الجدول 3.
+            </p>
+
+            <h2 class="section-heading">4 تعويض الانجراف الحراري لـ ISFET باستخدام تقنيات ML</h2>
+            <p class="text-md leading-relaxed mb-4">
+                لقد استخدمت تقنيات التعلم الآلي بنجاح في مجموعة واسعة من التطبيقات التي تتراوح من مهام رؤية الكمبيوتر، والتصنيع الصناعي، والمركبات ذاتية القيادة، وما إلى ذلك. يمكن تقسيم تقنيات التعلم الآلي بشكل عام إلى تعلم خاضع للإشراف وغير خاضع للإشراف. في التعلم الخاضع للإشراف، يتم تصميم النماذج للتعلم بناءً على بيانات التدريب المصنفة. تستخدم هذه النماذج المدربة لإجراء التنبؤات على البيانات غير المرئية. والفكرة هي تصميم نماذج يمكنها تعلم الأنماط والسلوكيات والخصائص للبيانات المرئية وتطبيق هذه المعرفة أثناء اتخاذ القرارات في البيانات غير المرئية. في التعلم غير الخاضع للإشراف، يتم تصميم النماذج لتحديد العلاقات والارتباط داخل البيانات غير المصنفة. بالنسبة للتطبيقات التي تكون فيها النتائج الدقيقة مرغوبة للغاية، فقد أثبتت تقنيات التعلم الخاضع للإشراف أنها أكثر إفادة بكثير مقارنة بتقنيات التعلم غير الخاضع للإشراف. نحن نستخدم تقنية التعلم الخاضع للإشراف في عملنا لتحسين دقة قيم الأس الهيدروجيني المتوقعة للمحاليل غير المعروفة. يتم تدريب النماذج باستخدام خصائص الانجراف الحراري المعروفة لحلول الأس الهيدروجيني المعيارية. تتوفر مجموعة متنوعة من خوارزميات التعلم الآلي لأداء مهام التنبؤ. نظرًا لأن الخوارزميات (أو النماذج) المختلفة قد تظهر دقة مختلفة على مجموعة بيانات، فإننا نجري تجاربنا باستخدام خوارزميات تعلم آلي حديثة متعددة. من أجل إجراء تجربة قوية، يتم تقسيم مجموعة البيانات بالكامل إلى مجموعتين فرعيتين حصريتين متبادلتين: مجموعة التدريب، ومجموعة الاختبار. تم تدريب النماذج على مجموعة بيانات التدريب؛ وأخيرًا، تم الحصول على دقة التنبؤ باستخدام مجموعة بيانات الاختبار. مجموعة الاختبار هي مجموعة مخفية تمامًا أثناء مرحلة التدريب. وهذا يسمح بمقارنة أكثر دقة لأداء خوارزميات التعلم الآلي المختلفة. يمكن اعتبار التعلم الآلي كدالة تعلم f تقوم بربط المتغيرات المدخلة $X(x_{1},x_{2}...,x_{n})$ بالمتغيرات المخرجة $Y(y_{1},y_{2}...,y_{n})$.
+            </p>
+            <p class="text-md leading-relaxed text-center mb-2">
+                $Y=f(X).$ (19)
+            </p>
+            <p class="text-md leading-relaxed mb-4">
+                تتعلم الخوارزمية الربط من بيانات التدريب. وبما أن شكل الدالة عادة ما يكون غير معروف، فإن مهمتنا هي تقييم خوارزميات تعلم آلي مختلفة للتحقيق في أي منها أفضل في تقريب دالة أساسية. يُطلق على نموذج التعلم الذي يتعلم على مجموعة ثابتة من المعلمات بغض النظر عن كمية البيانات التي يتم تغذيتها نماذج التعلم الآلي البارامترية. على عكس هذا، يُطلق على النموذج الذي لا يقوم بافتراضات قوية حول شكل دالة الربط نماذج التعلم الآلي غير البارامترية. النماذج البارامترية بسيطة وسريعة التعلم، وتعمل جيدًا حتى لو كانت البيانات غير كاملة. ومع ذلك، فهي عرضة لسوء المطابقة ومقيدة بشدة بشكل معين. من ناحية أخرى، فإن التقنيات غير البارامترية قادرة على مطابقة العديد من الأشكال الوظيفية ويمكن أن تؤدي إلى نماذج أداء أعلى للتنبؤ. تتطلب كمية كبيرة من البيانات لتقدير دالة الربط الأساسية، وتستغرق وقت تدريب أطول، وقد تؤدي إلى زيادة المطابقة.
+            </p>
+        </div>
+
+        <div class="page-break relative mt-12">
+            <p class="page-number">--- PAGE 9 ---</p>
+            <div class="wiley-header">
+                <span class="wiley-text">-WILEY-</span>
+                <span class="page-num">8</span>
+            </div>
+            <p class="text-sm text-gray-700 text-left">بهاردواج وآخرون</p>
+
+            <img src="https://placehold.co/600x300/e0e0e0/000000?text=Multi-layer+Perceptron" alt="Perceptron متعدد الطبقات (نموذج شبكة عصبية)" class="figure-image">
+            <p class="figure-caption">الشكل 4: Perceptron متعدد الطبقات (نموذج شبكة عصبية) [يمكن رؤية الشكل الملون على wileyonlinelibrary.com]</p>
+
+            <p class="text-md leading-relaxed mb-4">
+                في الأدبيات، تم القيام بعمل محدود جدًا لإظهار فعالية تقنيات التعلم الآلي لتعويض الانجراف الحراري في المستشعرات. في هذه الورقة، اقترحنا تطبيق تقنيات تعلم آلي خاضعة للإشراف مختلفة لتعلم خصائص الانجراف الحراري في مستشعر الأس الهيدروجيني ISFET بناءً على البيانات التجريبية المجمعة. لغرض تجاربنا، نستخدم تقنيات التعلم الآلي التالية: perceptron متعدد الطبقات (MLP، نموذج شبكة عصبية)، أشجار القرار (DT)، الانحدار متعدد الحدود (PR، حالة خاصة من الانحدار الخطي)، الغابات العشوائية (RF)، وانحدار متجه الدعم (SVR، آلة المتجه الداعم المستخدمة لتحليل الانحدار). يندرج MLP و PR ضمن نماذج التعلم الآلي البارامترية بينما تندرج DT و RF و SVR ضمن فئة نماذج التعلم الآلي غير البارامترية. لقد أجرينا تحليلًا شاملاً لتقنيات التعلم الآلي التالية:
+            </p>
+
+            <h3 class="subsection-heading">4.1 Perceptron متعدد الطبقات</h3>
+            <p class="text-md leading-relaxed mb-4">
+                المبرقة هي دالة تقريب عالمية تتكون من دوال خطية وغير خطية. يمكن وصف دالة تقريب خطية على أنها $y=w\times x+b$، أي الوزن مضروبًا في المدخل مضافًا إلى الانحياز. يمكن استخدام هذه المعادلة (الخط المستقيم) لتصنيف المدخل (x، وهو متجه من المدخلات ذات القيم الحقيقية) في فئتين. في سياق الشبكات العصبية، يكون المخرج دالة تفعيل (غير خطية، $\phi$) مطبقة على تركيبة خطية من متجه المدخلات (المعادلة 20).
+            </p>
+            <p class="text-md leading-relaxed text-center mb-2">
+                $y=\phi(\sum_{i=1}^{n}w_{i}x_{i}+b)=\phi(w^{T}x+b).$ (20)
+            </p>
+            <p class="text-md leading-relaxed mb-4">
+                MLP (أو الشبكة العصبية الاصطناعية) هي مزيج من أكثر من perceptron واحد يتكون من طبقة إدخال لاستقبال المدخلات، وطبقة إخراج لإجراء التنبؤات، وطبقة ساندويتش (تحتوي على طبقة مخفية واحدة أو متعددة) تعمل كمحرك حسابي حقيقي لـ MLP. MLP ذات طبقة مخفية واحدة هي دالة f: $R^{D}\rightarrow R^{L}$، حيث D هو حجم متجه الإدخال x و L هو حجم متجه الإخراج $f(x)$، بحيث:
+            </p>
+            <p class="text-md leading-relaxed text-center mb-2">
+                $f(x)=G(b^{(2)}+W^{(2)}(s(b^{(1)}+W^{(1)}x))).$ (21)
+            </p>
+            <p class="text-md leading-relaxed mb-4">
+                حيث $b^{(1)}$ و $b^{(2)}$ هما متجهان التحيز، و $W^{(1)}$ و $W^{(2)}$ مصفوفات الوزن، و G و s هي دوال التنشيط. يتم تدريب النموذج بعملية ثنائية الاتجاه: التمرير الأمامي والتمرير الخلفي. في التمرير الأمامي، يتم حساب قيم كل عقدة بناءً على مدخلاتها، أي أن تدفق الإشارة ينتقل من طبقة الإدخال عبر الطبقة المخفية إلى طبقة الإخراج. في التمرير الخلفي، باستخدام قاعدة السلسلة، يتم حساب المشتقات الجزئية للخطأ (الخطأ في الإخراج المقاس مقابل القيم الحقيقية) فيما يتعلق بمعلمات النموذج (المسماة الأوزان والانحيازات). في كل تمرير أمامي-خلفي، يتم تحديث المعلمات بناءً على خوارزمية تحسين مثل نزول التدرج العشوائي. تتكرر هذه العملية حتى التقارب (لا ينخفض الخطأ أكثر). يمكن لـ MLPs ذات طبقة مخفية واحدة تقريب أي دالة مستمرة. يوضح الشكل 4 شبكة تمثيلية لمهمة تعويض درجة الحرارة. تتم مناقشة مواصفات الشبكة في القسم التالي.
+            </p>
+        </div>
+
+        <div class="page-break relative mt-12">
+            <p class="page-number">--- PAGE 10 ---</p>
+            <div class="wiley-header">
+                <span class="wiley-text">-WILEY-</span>
+                <span class="page-num">9</span>
+            </div>
+            <p class="text-sm text-gray-700 text-left">بهاردواج وآخرون</p>
+
+            <img src="https://placehold.co/600x300/e0e0e0/000000?text=Process+Flow" alt="تدفق العملية لتعويض الانجراف الحراري باستخدام تقنيات التعلم الآلي (ML)" class="figure-image">
+            <p class="figure-caption">الشكل 5: تدفق العملية لتعويض الانجراف الحراري باستخدام تقنيات التعلم الآلي (ML) [يمكن رؤية الشكل الملون على wileyonlinelibrary.com]</p>
+
+            <div class="table-responsive mb-8">
+                <table class="w-full text-sm">
+                    <thead>
+                        <tr>
+                            <th class="text-right">النموذج</th>
+                            <th class="text-right">المعاملات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>MLP</td><td>دالة التنشيط: "relu," ألفا: 0.01، حجم الدفعة: 200، إبسيلون: 1e-08، عدد الطبقات المخفية: 1، حجم الطبقة المخفية: 5، معدل التعلم: 0.01، الحد الأقصى للتكرار: 1000، المحسن: Adam</td></tr>
+                        <tr><td>DT</td><td>الحد الأقصى للعمق: None، المعيار: "mse," الفاصل: best، الحد الأدنى لعينات الأوراق: 1، الحد الأدنى لعينات التقسيم: 2</td></tr>
+                        <tr><td>PR</td><td>اعتراض مناسب: True</td></tr>
+                        <tr><td>RF</td><td>Bootstrap: True، المعيار: mse، الحد الأقصى للأوراق: none، الحد الأقصى للعمق: none، عدد التقديرات: 10، الحد الأدنى لعينات التقسيم: 2، الحد الأدنى لعينات الأوراق: 1</td></tr>
+                        <tr><td>SVM</td><td>C:2، coef:0.0، درجة:1، إبسيلون:0.1، جاما:auto، نواة:'rbf، الحد الأقصى للتكرار:1، تول:0.001</td></tr>
+                    </tbody>
+                </table>
+                <p class="table-caption">الجدول 4: المعلمات المختارة لتقنيات التعلم الآلي المختلفة</p>
+                <p class="text-xs text-gray-500 text-center">الاختصارات: DT، أشجار القرار؛ MLP، perceptron متعدد الطبقات؛ PR، الانحدار متعدد الحدود؛ RF، الغابات العشوائية، SVR، انحدار متجه الدعم.</p>
+            </div>
+
+            <h3 class="subsection-heading">4.2 أشجار القرار</h3>
+            <p class="text-md leading-relaxed mb-4">
+                باستخدام أشجار القرار (DTs)، يتم الانحدار أو التصنيف على شكل بنية شجرية. تتطور الشجرة المرتبطة بشكل تدريجي عن طريق تقسيم مجموعة البيانات مرارًا وتكرارًا إلى مجموعات فرعية أصغر. وأخيرًا، تؤدي إلى شجرة ذات عقد قرار (تحتوي على فرعين أو أكثر) وعقد أوراق (قرار). تستخدم الخوارزمية اكتساب المعلومات والإنتروبيا لتطوير الشجرة. من أجل الاختصار، يمكن الرجوع إلى الشرح التفصيلي للخوارزمية على <a href="https://web.stanford.edu/class/stats202/content/lec19.pdf" class="text-blue-600 hover:underline">https://web.stanford.edu/class/stats202/content/lec19.pdf</a>.
+            </p>
+
+            <h3 class="subsection-heading">4.3 الانحدار متعدد الحدود</h3>
+            <p class="text-md leading-relaxed mb-4">
+                الانحدار متعدد الحدود (PR) هو حالة خاصة من الانحدار الخطي المتعدد. يهدف الانحدار الخطي إلى الحصول على خط يطابق البيانات بشكل أفضل، وهو خط يكون فيه إجمالي خطأ التنبؤ في حده الأدنى. يمكن استخدامه عندما قد يكون هناك علاقة غير خطية أفضل للبيانات التي تظهر علاقات غير خطية محتملة بين المدخلات والهدف. بالنسبة للميزة $X:X=\{x_{1},x_{2},x_{3},...\}$, يمكن تمثيل مخرج الانحدار متعدد الحدود من خلال المعادلة (22).
+            </p>
+            <p class="text-md leading-relaxed text-center mb-2">
+                $y=\beta_{0}+\beta_{1}x_{1}+\beta_{2}x_{2}+\beta_{3}x_{3}+...+\beta_{n}x_{n}$ (22)
+            </p>
+            <p class="text-md leading-relaxed mb-4">
+                حيث $\beta_{i}s$ لكل $i\in[0,n]$ هي الأوزان المقابلة لمتغير إدخال (ميزات). يتم تعريف دالة التكلفة لتقدير أفضل قيمة ممكنة للأوزان المعطاة لمتغير إدخال. توضح المعادلة التالية دالة التكلفة:
+            </p>
+            <p class="text-md leading-relaxed text-center mb-2">
+                $C(y)=\frac{1}{n}\sum_{l=1}^{n}(pred_{l}-y_{l})^{2}$ ، (23)
+            </p>
+            <p class="text-md leading-relaxed mb-4">
+                حيث pred هي القيمة المتوقعة و $y_{i}$ هي الحقيقة الأرضية.
+            </p>
+        </div>
+
+        <div class="page-break relative mt-12">
+            <p class="page-number">--- PAGE 11 ---</p>
+            <div class="wiley-header">
+                <span class="wiley-text">-WILEY-</span>
+                <span class="page-num">10</span>
+            </div>
+            <p class="text-sm text-gray-700 text-left">بهاردواج وآخرون</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                <img src="https://placehold.co/350x250/e0e0e0/000000?text=Transfer+Characteristics+pH" alt="خصائص نقل ISFET القائم على Si3N4 (pH)" class="figure-image w-full">
+                <img src="https://placehold.co/350x250/e0e0e0/000000?text=Transfer+Characteristics+Temp" alt="خصائص نقل ISFET القائم على Si3N4 (درجة الحرارة)" class="figure-image w-full">
+            </div>
+            <p class="figure-caption">الشكل 6: خصائص نقل ترانزستور تأثير المجال الحساس للأيونات (ISFET) القائم على $Si_{3}N_{4}$ [يمكن رؤية الشكل الملون على wileyonlinelibrary.com]</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                <img src="https://placehold.co/350x250/e0e0e0/000000?text=Vref-pH+Curves" alt="منحنيات Vref-pH لـ ISFET القائم على Si3N4" class="figure-image w-full">
+                <img src="https://placehold.co/350x250/e0e0e0/000000?text=Vref-Temp+Curves" alt="منحنيات Vref-درجة الحرارة لـ ISFET القائم على Si3N4" class="figure-image w-full">
+            </div>
+            <p class="figure-caption">الشكل 7: منحنيات خصائص ترانزستور تأثير المجال الحساس للأيونات (ISFET) القائم على $Si_{3}N_{4}$</p>
+
+            <p class="text-md leading-relaxed mb-4">
+                علاوة على ذلك، لتقليل دالة التكلفة، يتم تحديث الأوزان باستخدام استراتيجية مثل نزول التدرج.
+            </p>
+
+            <h3 class="subsection-heading">4.4 انحدار متجه الدعم</h3>
+            <p class="text-md leading-relaxed mb-4">
+                آلة المتجه الداعم (SVM) هي خوارزمية تعلم آلي أخرى قوية يمكن استخدامها أيضًا كطريقة انحدار من خلال الاستفادة من ميزة الهامش الأقصى الذي يميز الخوارزمية بشكل أساسي. تحدد SVM المستوى الفائق الأمثل بين فئتين لزيادة الهامش بين الفئات. لتكن $\{(x_{k},y_{k})$. $k=1,...,n\}$ هي مجموعة عينات التدريب المصنفة لـ $x_{k}\in c^{w}$ و $y_{k}\in\{+1,-1\}$ حيث $c^{w}$ هو متجه الميزات لكل فئة. يمكن تصنيف عينة استعلام/اختبار S باستخدام المعادلة 24:
+            </p>
+            <p class="text-md leading-relaxed text-center mb-2">
+                $f(s)=sign(\sum_{k=1}^{n}l_{k}y_{k}V(x_{k},s)+\rho)$ (24)
+            </p>
+            <p class="text-md leading-relaxed mb-4">
+                حيث $V(.,.)$ هي دالة النواة، و $l_{k}$ تمثل مضاعفات لاغرانج لمشكلة تحسين مزدوجة، وتمثل $\rho$ معاملات الانحياز. يستخدم انحدار متجه الدعم (SVR) نفس مبادئ SVM، والذي يستخدم للتصنيف، مع بعض التغييرات الصغيرة. عندما يكون الناتج رقمًا حقيقيًا، فإن البيانات المتاحة لديها إمكانيات لا نهائية ويصبح من الصعب جدًا التنبؤ من البيانات. لذلك، يتم تحديد هامش تفاوت في تقريب لـ SVM، والذي كان سيُطلب بالفعل من المشكلة. ومع ذلك، فإن الفكرة الرئيسية لـ SVM تظل كما هي: تقليل الخطأ، ومحاولة صياغة المستوى الفائق الذي يزيد الهامش، وفهم أن جزءًا من الخطأ مسموح به.
+            </p>
+        </div>
+
+        <div class="page-break relative mt-12">
+            <p class="page-number">--- PAGE 12 ---</p>
+            <div class="wiley-header">
+                <span class="wiley-text">-WILEY-</span>
+                <span class="page-num">11</span>
+            </div>
+            <p class="text-sm text-gray-700 text-left">بهاردواج وآخرون</p>
+
+            <div class="table-responsive mb-8">
+                <table class="w-full text-sm">
+                    <thead>
+                        <tr>
+                            <th class="text-right">الأس الهيدروجيني (PH)</th>
+                            <th class="text-right">TC $(mV/^{\circ}C)$</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>2</td><td>5.10</td></tr>
+                        <tr><td>4</td><td>4.40</td></tr>
+                        <tr><td>7</td><td>4.10</td></tr>
+                        <tr><td>10</td><td>3.55</td></tr>
+                        <tr><td>12</td><td>3.12</td></tr>
+                    </tbody>
+                </table>
+                <p class="table-caption">الجدول 5: معاملات درجة الحرارة (TC) لقيم الأس الهيدروجيني المختلفة</p>
+            </div>
+
+            <div class="table-responsive mb-8">
+                <table class="w-full text-sm">
+                    <thead>
+                        <tr>
+                            <th class="text-right">نموذج المعامل</th>
+                            <th class="text-right">MLP</th>
+                            <th class="text-right">DT</th>
+                            <th class="text-right">PR</th>
+                            <th class="text-right">RF</th>
+                            <th class="text-right">SVR</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>MAE</td><td>1.550e-2</td><td>2.47e-2</td><td>2.32e-2</td><td>7.39e-3</td><td>3.92e-2</td></tr>
+                        <tr><td>MSE</td><td>5.21e-4</td><td>1.83e-3</td><td>1.63e-3</td><td>1.50e-4</td><td>2.93e-3</td></tr>
+                        <tr><td>RMS</td><td>2.28e-2</td><td>4.28e-2</td><td>4.03e-2</td><td>1.22e-2</td><td>5.42e-2</td></tr>
+                        <tr><td>$R^{2}$</td><td>9.99e-1</td><td>9.98e-1</td><td>9.98e-1</td><td>9.99e-1</td><td>9.97e-1</td></tr>
+                    </tbody>
+                </table>
+                <p class="table-caption">الجدول 6: مقارنة المعاملات التي تم الحصول عليها في خوارزميات التعلم الآلي المختلفة لـ ISFET ROIC القائم على $Si_{3}N_{4}$ لجميع عينات التدريب</p>
+                <p class="text-xs text-gray-500 text-center">الاختصارات: DT، أشجار القرار؛ MAE، متوسط الخطأ المطلق؛ MLP، perceptron متعدد الطبقات؛ MSE، متوسط الخطأ التربيعي؛ PR، الانحدار متعدد الحدود؛ RF، الغابات العشوائية؛ RMS، جذر متوسط الخطأ التربيعي؛ SVR، انحدار متجه الدعم.</p>
+            </div>
+
+            <h3 class="subsection-heading">4.5 الغابة العشوائية</h3>
+            <p class="text-md leading-relaxed mb-4">
+                تتوقع الغابة العشوائية (RF) الناتج بناءً على تأثير مشترك لمجموعة من أشجار القرار. تقوم بتجهيز عدد من أشجار القرار التصنيفية على عينات فرعية مختلفة من البيانات. أخيرًا، يتم حساب متوسط الناتج لحساب الدقة.
+            </p>
+            <p class="text-md leading-relaxed mb-4">
+                لتقليل تباين دالة التنبؤ، يتم استخدام تقنية معروفة، وهي التعبئة (bagging). الفكرة هي حساب متوسط العديد من النماذج المليئة بالضوضاء ولكن غير المتحيزة تقريبًا. وبالتالي، فإنها تعمل بشكل جيد مع الأشجار (النماذج ذات التباين العالي والانحياز المنخفض). في الانحدار، يتم bootstrapping للبيانات وتجهيزها بنفس شجرة الانحدار (جميعها غير مترابطة) عدة مرات. والنتيجة النهائية هي متوسط جميع الأشجار.
+            </p>
+
+            <h2 class="section-heading">5 الإعداد التجريبي</h2>
+            <h3 class="subsection-heading">5.1 مقاييس التقييم</h3>
+            <p class="text-md leading-relaxed mb-4">
+                لتقييم النماذج المدربة، تم النظر في العديد من مقاييس الأداء المعروفة. نُبلغ عن نتائجنا من حيث متوسط الخطأ المطلق (MAE)، ومتوسط الخطأ التربيعي (MSE)، وجذر متوسط الخطأ التربيعي (RMS)، والارتباط ($R^{2}$). يشير "الارتباط" الأعلى بين الناتج الفعلي والناتج المتوقع إلى نموذج جيد. لجميع مقاييس الخطأ، تشير القيم الأصغر إلى نموذج جيد.
+            </p>
+            <p class="text-md leading-relaxed mb-4">
+                لتحديد أفضل تقنية تعلم آلي، يجب مقارنة مقاييس الأداء لكل منها. الارتباط هو مقياس إحصائي يستخدم لتحديد العلاقة بين المتغيرين العشوائيين. يكون الناتج (R) دائمًا قيمة تتراوح بين -1 و 1، حيث تشير -1، 0، و 1 إلى علاقة خطية عكسية، ولا علاقة، وعلاقة خطية قوية جدًا، على التوالي. ننشر قيم $R^{2}$، وبالتالي، يتراوح الناتج من 0 إلى 1. ويعتبر هذا مقياسًا مفيدًا لأنه يساعد في التنبؤ بكمية من الأخرى وهو أساس للعديد من تقنيات النمذجة الأخرى. يعبر كل من MAE و RMS عن متوسط خطأ التنبؤ للنموذج. يمكن أن يتراوح كلاهما من 0 إلى ما لا نهاية وهما غير مبالين باتجاه الأخطاء. مقارنة بـ MAE، يعطي RMS وزنًا كبيرًا للأخطاء الكبيرة.
+            </p>
+
+            <h3 class="subsection-heading">5.2 إعدادات تجريبية</h3>
+            <p class="text-md leading-relaxed mb-4">
+                يُظهر الشكل 5 تمثيلًا تخطيطيًا للإعداد التجريبي المقترح. الجزء الأول هو توليد/جمع البيانات باستخدام دائرة قراءة ISFET، يليه تدريب النموذج - تقدير المعلمات - باستخدام التدريب من البيانات المجمعة. المرحلة النهائية هي التنبؤ بالأس الهيدروجيني على مجموعة اختبار تُستخدم لمقارنة النموذج. النقاط البيانية المستخدمة هي مجموعة من الفولتيات المرجعية والأس الهيدروجيني المقابل للمحلول الذي يتراوح من 0 إلى 14 بدقة 0.1. تم تغيير درجة الحرارة من $15^{\circ}C$ إلى $55^{\circ}C$ بخطوة 1 درجة مئوية. وبالتالي، تم جمع إجمالي 5781 عينة بيانات. تم تقسيم البيانات بالكامل إلى مجموعات تدريب واختبار بنسبة 80:20 (أي 4625:1156). لتوحيد البيانات، تم أخذ تقنيات المعالجة المسبقة مثل التمركز حول المتوسط والتطبيع في الاعتبار كما هو محدد في المعادلة (25).
+            </p>
+            <p class="text-md leading-relaxed text-center mb-2">
+                $X_{new}=\frac{(X_{old}-X_{mean})}{X_{sigma}},$ (25)
+            </p>
+            <p class="text-md leading-relaxed mb-4">
+                حيث $X_{old}$ هي قيم درجة الحرارة، و $X_{mean}$ و $X_{sigma}$ هما المتوسط والانحراف المعياري لجميع درجات الحرارة في مجموعة التدريب، على التوالي، و $X_{new}$ هي القيمة المُطبعة. يتم إجراء تطبيع مماثل لقيم $V_{ref}$ والأس الهيدروجيني. يتم جمع ميزات الإدخال من: (أ) جهد خرج ROIC و (ب) درجة الحرارة المحيطة. المهمة هي تقدير الأس الهيدروجيني للمحلول. تم إجراء المحاكاة باستخدام مكتبة Sklearn ** python في python3.5.54. يحتوي MLP على طبقة مخفية واحدة بخمسة عقد، ومدخلين، ومخرج واحد. في DT، يتم توسيع العقد حتى تحتوي جميع الأوراق على عدد أقل من عينات min-samples-split أو يكون اكتساب المعلومات صفرًا. يستخدم نموذج DT الخاص بنا خوارزمية أشجار التصنيف والانحدار (CART). في الانحدار متعدد الحدود، استخدمنا حساب الاعتراض. تستخدم RF 10 أشجار، ويتم توسيع العقد حتى تحتوي جميع الأوراق على عدد أقل من عينات min-samples-split أو تكون نقية، والحد الأدنى لعدد العينات المطلوبة لتقسيم عقدة هو اثنان، ويُسمح بالتحفيز (bootstrapping). تستخدم SVM C (معامل العقوبة) بقيمة 2، نواة rbf، ويتم ضبط تحمل التوقف على 0.001. يوضح الجدول 4 المعلمات المستخدمة لكل خوارزمية قبل مطابقة نماذج ML.
+            </p>
+
+            <h2 class="section-heading">6 النتائج والمناقشة</h2>
+            <p class="text-md leading-relaxed mb-4">
+                أجرينا محاكاة SPICE لتوصيف نموذج ISFET ماكرو المطور. رسمنا خصائص النقل للجهاز لقيم الأس الهيدروجيني $pH=2,4,7,10,$ و 12. تم تأريض المصدر والجسم وتم ضبط $V_{DS}$ على 0.5 فولت. يوضح الشكل 6A خصائص نقل نموذج ISFET ماكرو القائم على $Si_{3}N_{4}$ كما نوقش في القسم 3. خصائص التيار تعتمد على الأس الهيدروجيني بسبب التباين في جهد عتبة الجهاز بناءً على التركيز الكلي لأيونات $H^{+}$. يتم رسم خصائص الجهاز عند درجة حرارة الغرفة. ينخفض جهد عتبة الترانزستور في الوسط الحمضي بسبب برتنة مواقع السيلانول والأمين الأولية.
+            </p>
+        </div>
+
+        <div class="page-break relative mt-12">
+            <p class="page-number">--- PAGE 13 ---</p>
+            <div class="wiley-header">
+                <span class="wiley-text">-WILEY-</span>
+                <span class="page-num">12</span>
+            </div>
+            <p class="text-sm text-gray-700 text-left">بهاردواج وآخرون</p>
+
+            <img src="https://placehold.co/600x300/e0e0e0/000000?text=RMS+vs+Training+Data" alt="دقة الاختبار مقابل النسبة المئوية لبيانات التدريب المستخدمة" class="figure-image">
+            <p class="figure-caption">الشكل 8: دقة الاختبار مقابل النسبة المئوية لبيانات التدريب المستخدمة [يمكن رؤية الشكل الملون على wileyonlinelibrary.com]</p>
+
+            <p class="text-md leading-relaxed mb-4">
+                الترانزستور كدالة لدرجة الحرارة كما ورد في MOSFET.
+            </p>
+            <p class="text-md leading-relaxed text-center mb-2">
+                $V_{T}(T)=V_{T}(T_{o})-KT$. (26)
+            </p>
+            <p class="text-md leading-relaxed mb-4">
+                ينخفض جهد العتبة مع درجة الحرارة، حيث K هو معامل درجة حرارة جهد العتبة بقيمة نموذجية تبلغ $2.4~mV/K$ لـ MOSFET. ومع ذلك، مع زيادة الجهد المرجعي، يكون مقدار التيار أقل لدرجات الحرارة الأعلى بسبب زيادة التشتت مما يؤدي إلى انخفاض حركة الإلكترون.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                <img src="https://placehold.co/350x250/e0e0e0/000000?text=pH-2+Prediction" alt="منحنى التنبؤ pH-2" class="figure-image w-full">
+                <img src="https://placehold.co/350x250/e0e0e0/000000?text=pH-4+Prediction" alt="منحنى التنبؤ pH-4" class="figure-image w-full">
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                <img src="https://placehold.co/350x250/e0e0e0/000000?text=pH-7+Prediction" alt="منحنى التنبؤ pH-7" class="figure-image w-full">
+                <img src="https://placehold.co/350x250/e0e0e0/000000?text=pH-10+Prediction" alt="منحنى التنبؤ pH-10" class="figure-image w-full">
+            </div>
+            <div class="flex justify-center mb-8">
+                <img src="https://placehold.co/350x250/e0e0e0/000000?text=pH-12+Prediction" alt="منحنى التنبؤ pH-12" class="figure-image w-full md:w-1/2">
+            </div>
+            <p class="figure-caption">الشكل 9: منحنى التنبؤ مع وبدون تعويض الانجراف الحراري لقيم الأس الهيدروجيني المختلفة أ، PH-2، ب، pH-4، ج، pH-7، د، pH-10، و هـ، pH-12 [يمكن رؤية الشكل الملون على wileyonlinelibrary.com]</p>
+        </div>
+
+        <div class="page-break relative mt-12">
+            <p class="page-number">--- PAGE 14 ---</p>
+            <div class="wiley-header">
+                <span class="wiley-text">-WILEY-</span>
+                <span class="page-num">13</span>
+            </div>
+            <p class="text-sm text-gray-700 text-left">بهاردواج وآخرون</p>
+
+            <p class="text-md leading-relaxed mb-4">
+                تم تصدير نموذج ISFET macromodel ككتلة فرعية لمحاكاة دائرة القراءة. كما نوقش في القسم 3، نستخدم طوبولوجيا قراءة ثابتة الجهد وثابتة التيار حيث تغيرات الأس الهيدروجيني للمحلول تعدل جهد العتبة للترانزستور ويتم ضبط جهد المرجع للحفاظ على تيار تصريف ثابت. يتم أخذ جهد المرجع كإشارة خرج. يوضح الشكل 7A خصائص خرج ISFET ROIC عند درجات حرارة مختلفة (أي $V_{ref}-pH)$. لوحظ تحول يعتمد على درجة الحرارة في الخصائص عندما يتم إجراء المحاكاة عند $15^{\circ}C$, $25^{\circ}C$, $35^{\circ}C$, $45^{\circ}C$, و $55^{\circ}C$. نحصل على قيم أعلى لـ $V_{ref}$ لدرجات الحرارة المنخفضة، وهو ما يتفق مع خصائص نقل ISFET macromodel، حيث يعمل الجهاز في وضع التشبع. يوضح الشكل 7B خرج ROIC عندما يتم مسح درجة الحرارة لقيم pH مختلفة. لوحظ اعتماد كبير على درجة الحرارة في المخرجات لقيم pH مختلفة. يوضح الجدول 5 معامل درجة الحرارة (TC) لمستشعر الأس الهيدروجيني لقيم pH مختلفة. تعتمد TC على pH وتم تدريب نماذج ML بالقيم المستخرجة لدقة 0.1 pH لتنبؤ دقيق بالأس الهيدروجيني للمحاليل غير المعروفة على مدى pH من 0 إلى 14.
+            </p>
+            <p class="text-md leading-relaxed mb-4">
+                لقد استخدمنا أربعة مقاييس تقييم (MAE، MSE، RMS، و $R^{2}$) لمقارنة أداء خوارزميات التعلم الآلي المختلفة على نفس مجموعة البيانات لتعويض الانجراف الحراري. يوضح الجدول 6 أداء ISFET ROIC القائم على $Si_{3}N_{4}$ على مقاييس الأداء المختلفة. حققت جميع تقنيات التعلم الآلي ارتباطًا عاليًا جدًا (درجة $R^{2}$). وتدل القيمة العالية للارتباط بين القيمة الفعلية للأس الهيدروجيني والقيمة المتوقعة على قدرة نماذج التعلم الآلي على حساب الانجراف الحراري بدقة. كما أن معدلات الخطأ التي تم تحقيقها باستخدام نماذج مختلفة منخفضة جدًا، حيث تتفوق الغابات العشوائية على غيرها.
+            </p>
+            <p class="text-md leading-relaxed mb-4">
+                يقارن الشكل 8 نماذج التعلم الآلي المختلفة بناءً على النسبة المئوية لعينات التدريب المستخدمة. يتم أخذ العينات عشوائيًا من مجموعة التدريب. يمكن رؤية أن خطأ RMS لـ DT و SVR و PR يختلف بشكل أقل مع النسبة المئوية لعينات التدريب المتاحة. يمكن تفسير الانخفاض الجذري في خطأ MLP بطبيعة الشبكة العصبية التي تتطلب عددًا كبيرًا من عينات التدريب لمطابقة معلمات النموذج. يمكن رؤية RF يتفوق على النماذج الأخرى مع زيادة عدد عينات التدريب. يمكن تفسير ذلك بطبيعة RF كونها مجموعة من أشجار القرار. وهي قابلة للتطوير بدرجة كبيرة لأي عدد من الأبعاد.
+            </p>
+            <p class="text-md leading-relaxed mb-4">
+                علاوة على ذلك، قمنا بالتحقيق في أداء نموذج التعلم الآلي المتفوق (RF) فيما يتعلق بنموذج بسيط لملاءمة المنحنيات (ولهذا الغرض، اخترنا الانحدار الخطي). يوضح الشكل 9 منحنيات الأس الهيدروجيني المتوقعة مقابل درجة الحرارة لقيم الأس الهيدروجيني 2 و 4 و 7 و 10 و 12، على التوالي. تتوافق المنحنيات باللون الأسود مع نموذج الانحدار للغابة العشوائية الذي تم تجهيزه على جميع عينات بيانات التدريب باستثناء نطاق من قيم الأس الهيدروجيني (واحد أس هيدروجيني أقل إلى واحد أس هيدروجيني أعلى من الأس الهيدروجيني الفعلي). على سبيل المثال، ستكون بيانات التدريب للتنبؤ بالأس الهيدروجيني 4 جميع العينات المقابلة للأس الهيدروجيني 0-3 و 5-14، أي باستثناء جميع العينات المقابلة للأس الهيدروجيني 3-5. نحصل على تباين في جذر متوسط الخطأ التربيعي (RMS) يبلغ $\Delta pH\le0.024$ على مدى درجة حرارة تتراوح من $15^{\circ}C$ إلى $55^{\circ}C$ مقارنة بـ $\Delta pH\le1.346$ لإشارة الخرج غير المعوضة لقيم الأس الهيدروجيني المتوقعة - يتم عرض مقارنة مفصلة في الجدول 7. يقارن الجدول 8 نتائج تعويض الانجراف الحراري التي تم الحصول عليها مع الأدبيات الموجودة. تعتمد سرعة تقدير الأس الهيدروجيني على زمن استقرار $V_{ref}$ لـ ISFET والأجهزة المستخدمة لنمذجة خوارزمية التعلم الآلي. بالنسبة لوحدة المعالجة المركزية، فإن سرعة الحساب عالية جدًا وبالتالي فإن وقت التنبؤ محدود بزمن استقرار دائرة قراءة ISFET (~30 ثانية).
+            </p>
+        </div>
+
+        <div class="page-break relative mt-12">
+            <p class="page-number">--- PAGE 15 ---</p>
+            <div class="wiley-header">
+                <span class="wiley-text">-WILEY-</span>
+                <span class="page-num">14</span>
+            </div>
+            <p class="text-sm text-gray-700 text-left">بهاردواج وآخرون</p>
+
+            <div class="table-responsive mb-8">
+                <table class="w-full text-sm">
+                    <thead>
+                        <tr>
+                            <th class="text-right">pH</th>
+                            <th class="text-right">معوض</th>
+                            <th class="text-right">غير معوض</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>2</td><td>0.024</td><td>1.346</td></tr>
+                        <tr><td>4</td><td>0.016</td><td>1.242</td></tr>
+                        <tr><td>7</td><td>0.018</td><td>1.086</td></tr>
+                        <tr><td>10</td><td>0.024</td><td>0.931</td></tr>
+                        <tr><td>12</td><td>0.017</td><td>0.826</td></tr>
+                    </tbody>
+                </table>
+                <p class="table-caption">الجدول 7: تباين جذر متوسط الخطأ التربيعي للأس الهيدروجيني المتوقع - بعد التعويض وبدون تعويض - عن القيمة الفعلية (ApH)</p>
+            </div>
+
+            <div class="table-responsive mb-8">
+                <table class="w-full text-sm">
+                    <thead>
+                        <tr>
+                            <th class="text-right">pH</th>
+                            <th class="text-right">تشان وآخرون 21</th>
+                            <th class="text-right">تشين وآخرون 22</th>
+                            <th class="text-right">زوريلا وآخرون 23</th>
+                            <th class="text-right">هذا العمل</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>4</td><td>0.101</td><td>0.03</td><td>0.02</td><td>0.016</td></tr>
+                        <tr><td>7</td><td>0.0612</td><td>0.05</td><td>0.02</td><td>0.018</td></tr>
+                        <tr><td>10</td><td></td><td></td><td></td><td>0.024</td></tr>
+                        <tr><td>9</td><td>0.128</td><td>0.05</td><td></td><td></td></tr>
+                    </tbody>
+                </table>
+                <p class="table-caption">الجدول 8: مقارنة بين نتائج تعويض الانجراف الحراري التي تم الحصول عليها في هذا العمل مع الأدبيات المبلغ عنها (APH)</p>
+            </div>
+
+            <p class="text-md leading-relaxed mb-4">
+                وقت استقرار دائرة القراءة (حوالي 30 ثانية). لبناء نظام محمول باليد، يمكن تحميل المعلمات المدربة على لوحة FPGA. سرعة الحساب لمثل هذه اللوحات عالية جدًا ويمكن إهمالها بأمان مقارنة بوقت استقرار الدائرة. يمكن أيضًا نمذجة تغير $V_{ref}$ مع تدهور أداء الجهاز بمرور الوقت باستخدام نفس النهج. يجب إعادة ضبط معلمات النموذج، مع كون بيانات الانجراف الزمني التجريبية هي المتغير المدخل الثالث لتدريب نموذج التعلم الآلي، بالإضافة إلى خرج ROIC ودرجة الحرارة.
+            </p>
+
+            <h2 class="section-heading">7 خلاصة</h2>
+            <p class="text-md leading-relaxed mb-4">
+                في هذا العمل، تم تطوير نموذج ماكرو SPICE دقيق لـ ISFET لإدخال اعتماد درجة الحرارة للمعلمات الكهروكيميائية وشبه الموصلات. ثم يتم تصدير نموذج الماكرو ككتلة فرعية، والتي تستخدم في دائرة واجهة القراءة للحصول على خرج يعتمد على درجة الحرارة. يستخدم خرج ROIC كأحد المعلمات لتدريب خوارزميات التعلم الآلي الحديثة المختلفة لتعلم خصائص الانجراف الحراري لقيم الأس الهيدروجيني المختلفة. يوضح هذا العمل ملاءمة تقنيات التعلم الآلي لتعويض الانجراف الحراري في ISFET. تم تدريب تقنيات التعلم الآلي المختلفة (الانحدار) على مجموعة البيانات التي تم إنشاؤها، وتمت مقارنة أدائها بناءً على مقاييس أداء مختلفة. لوحظت خصائص الخرج المستقلة عن درجة الحرارة المرغوبة للأس الهيدروجيني 2 و 4 و 7 و 10 و 12. أثبتت تقنيات الانحدار (MLP، PR، DT، RT، و SVR) فعاليتها في تعويض الانجراف الحراري. لوحظ أن RT أعطت أفضل أداء بأقل قيمة RMS مقارنة بالتقنيات الأخرى. تقنيات التعلم الآلي قوية ويمكن استخدامها لتعويض درجة الحرارة لمستشعرات الأس الهيدروجيني القائمة على ISFET لأفلام الاستشعار الأخرى المتنوعة وتصنيفات ROIC. كجزء من العمل المستقبلي، يمكن تصميم نموذج دائرة فرعية ذات تأثيرات زمنية. يمكن نمذجة الانجراف الزمني باستخدام تحليل السلاسل الزمنية والميزات ذات الصلة. من المتوقع أن تؤثر تأثيرات التدهور الزمني على الجهاز، وسيوفر تدريب نماذج التعلم الآلي ببيانات زمنية لخصائص الجهاز مع مخازن pH مختلفة نظامًا قويًا. علاوة على ذلك، يمكن ترميز المعلمات التي تعلمها التعلم الآلي بلغة وصف الأجهزة مثل Verilog، والتي يمكن تطبيقها على لوحات أجهزة FPGA.
+            </p>
+
+            <h2 class="section-heading">شكر وتقدير</h2>
+            <p class="text-md leading-relaxed mb-4">
+                يود المؤلفون أن يشكروا مدير CSIR-CEERI، بيلاني، على دعمه السخي. نحن ممتنون للغاية لجميع العلماء والمسؤولين الفنيين في منطقة المستشعرات الذكية، CSIR-CEERI، بيلاني، على دعمهم وتحفيزهم المستمرين. يعرب المؤلفون عن امتنانهم لمجلس البحث العلمي والصناعي (CSIR)، نيودلهي، على الدعم المالي. ونقر أيضًا بامتنان دعم شركة NVIDIA من خلال التبرع بوحدة معالجة الرسوميات Titan Xp المستخدمة في هذا البحث.
+            </p>
+
+            <h3 class="subsection-heading">معرف الباحث المفتوح والمساهم (ORCID)</h3>
+            <p class="text-md leading-relaxed mb-4">
+                سوميندو سينها
+            </p>
+            <p class="text-md leading-relaxed mb-4">
+                <a href="https://orcid.org/0000-0003-3088-7637" class="text-blue-600 hover:underline">https://orcid.org/0000-0003-3088-7637</a>
+            </p>
+
+            <h2 class="section-heading">المراجع</h2>
+            <ol class="reference-list">
+                <li>بيرغفيلد ب. ثلاثون عاماً من ISFETOLOGY: ما حدث في الثلاثين عاماً الماضية وما قد يحدث في الثلاثين عاماً القادمة. Sens Actuators B. 2003;88(1):1-20.</li>
+                <li>كايستي إم. مبادئ الكشف عن مستشعرات FET البيولوجية والكيميائية. Biosens Bioelectron. 2017;98:437-448.</li>
+                <li>موزر إن، لاند تي إس، تومازو سي، جيورجيو بي. ISFETs في CMOS والاتجاهات الناشئة في الأجهزة: مراجعة. IEEE Sensors J. 2016;16(17):6496-6514.</li>
+                <li>أولسنر دبليو، زوسل جيه، جوث يو، وآخرون. تغليف رقائق مستشعر ISFET. Sens Actuators B. 2005;105(1):104-117.</li>
+                <li>مارتز تي آر، كونيري جي جيه، جونسون كي إس. اختبار Honeywell Durafet لتطبيقات الأس الهيدروجيني في مياه البحر. Limnol Oceanogr Methods. 2010;8(5):172-184.</li>
+                <li>زوريلا إل إيه في، كالفو جي إل. نظام مراقبة لمقارنة سلوك ISFET وقطب الزجاج الكهربائي. In: 2017 IEEE XXIV International Conference on Electronics, Electrical Engineering and Computing (INTERCON). كوسكو، بيرو: IEEE؛ 2017:1-4.</li>
+                <li>شونينغ إم جيه، بوغوسيان إيه. التطورات الحديثة في ترانزستورات تأثير المجال الحساسة بيولوجيًا (BioFETs). Analyst. 2002;127(9):1137-1151.</li>
+                <li>خيمينيز-خوركيرا سي، أوروزكو جيه، بالدي إيه. المستشعرات الدقيقة القائمة على ISFET للمراقبة البيئية. Sensors. 2009;10(1):61-83.</li>
+                <li>لي سي إس، كيم إس، كيم إم. ترانزستور تأثير المجال الحساس للأيونات للاستشعار البيولوجي. Sensors. 2009;9(9):7111-7131.</li>
+                <li>جانتا جيه. مبادئ المستشعرات الكيميائية. برلين/هايدلبرغ، ألمانيا: Springer Science & Business Media؛ 2010.</li>
+                <li>شونينغ إم جيه، بوغوسيان إيه. التطورات الحديثة في ترانزستورات تأثير المجال الحساسة بيولوجيًا (BioFETs). Analyst. 2002;127(9):1137-1151.</li>
+                <li>باتشوري في، إنجيبراندت إس. ترانزستورات تأثير المجال الحساسة بيولوجيًا: من ISFETs إلى NanoFETs. Essays Biochem. 2016;60(1):81-90.</li>
+            </ol>
+        </div>
+
+        <div class="page-break relative mt-12">
+            <p class="page-number">--- PAGE 16 ---</p>
+            <div class="wiley-header">
+                <span class="wiley-text">-WILEY-</span>
+                <span class="page-num">15</span>
+            </div>
+            <p class="text-sm text-gray-700 text-left">بهاردواج وآخرون</p>
+
+            <ol class="reference-list" start="13">
+                <li>ناكاتا إس، آري تي، أكيتا إس، تاكي ك. جهاز رعاية صحية يمكن ارتداؤه، مرن، ومتعدد الوظائف مزود بمستشعر كيميائي ISFET لرصد الأس الهيدروجيني للعرق ودرجة حرارة الجلد في نفس الوقت. ACS Sensors. 2017 2(3):443-448.</li>
+                <li>خانا في. حلول علاجية وتكيفية للسلوك غير المثالي لـ ISFET. Sens Rev. 2013;33(3):228-237.</li>
+                <li>جاماسب إس، كولينز إس، سميث آر إل. نموذج فيزيائي للانجراف في pH ISFETs. Sensors Actuators B Chem. 1998;49(1-2):146-155.</li>
+                <li>تشودري آر، شارما إيه، سينها إس، وآخرون. تصنيع وتوصيف ترانزستور تأثير المجال من أكسيد المعدن وأشباه الموصلات من نوع n-metal-oxide-semiconductor، المصنع على الشريحة مع ترانزستور تأثير المجال الحساس للأيونات من نيتريد السيليكون. IET Comput Digit Tech. 2016;10(5):268-272.</li>
+                <li>سينها إس، راثور آر، سينها إس، شارما آر، موخيا آر، خانا في. نمذجة ومحاكاة مستشعر ISFET الدقيق لأفلام الاستشعار المختلفة. In: ISSS International Conference on Smart Materials, Structures and Systems; 2014; بنغالور، الهند.</li>
+                <li>تشو جي سي، ونج سي واي، تساي إتش إم. دراسة تأثيرات درجة الحرارة على pH-ISFET ذو بوابة Al2O3. Sens Actuators B. 2002;81(2-3):152-157.</li>
+                <li>حاجي ب، نعيمي إس إي، هوومينيوك آي، لاونيه جيه، تمبل-بوييه ب. نمذجة سلوكية لتأثير درجة حرارة pH-ISFET. In: 14th IEEE International Conference on Electronics, Circuits and Systems, 2007. ICECS 2007. مراكش، المغرب: IEEE؛ 2007:419-422.</li>
+                <li>تشونغ دبليو واي، يانغ سي إتش، وانغ إم سي، بيجانوسكا دي، توربيتش دبليو. إلكترونيات تعويض درجة الحرارة لتطبيقات قراءة ISFET. In: 2004 IEEE International Workshop on Biomedical Circuits and Systems. سنغافورة: IEEE؛ 2004:S1-6.</li>
+                <li>تشان بي كيه، تشين دي. دائرة واجهة CMOS ISFET بتقنية تعويض تيار ديناميكية للحرارة. IEEE Trans Circuits Syst Regul Pap. 2007;54(1):119-129.</li>
+                <li>تشين دي، تشان بي كيه. نظام استشعار ISFET ذكي مع تعويض درجة الحرارة والانجراف للمراقبة طويلة الأجل؛ 2008.</li>
+                <li>زوريلا إل إيه في، ليزاما جيه. نظام قراءة ومعالجة مدمج منخفض الطاقة لمستشعرات ISFET كأجهزة قياس. In: 2018 IEEE 9th Latin American Symposium on Circuits & Systems (LASCAS). بويرتو فالارتا، المكسيك: IEEE؛ 2018:1-4.</li>
+                <li>مورارو إيه، بيسكو إم، بورتشيوس إم، فورتونا سي، ملادينيتش دي. استخدام التعلم الآلي على بيانات المستشعرات. J Comput Inf Technol. 2010;18(4):341-347.</li>
+                <li>زيمرمان إن، بريستو إيه إيه، كومار إس بي، وآخرون. نموذج معايرة للتعلم الآلي يستخدم الغابات العشوائية لتحسين أداء المستشعر لمراقبة جودة الهواء بتكلفة أقل. Atmospheric Measurement Techniques. 2018;11(1):291-313.</li>
+            </ol>
+        </div>
+
+        <div class="page-break relative mt-12">
+            <p class="page-number">--- PAGE 17 ---</p>
+            <div class="wiley-header">
+                <span class="wiley-text">-WILEY-</span>
+                <span class="page-num">16</span>
+            </div>
+            <p class="text-sm text-gray-700 text-left">بهاردواج وآخرون</p>
+
+            <ol class="reference-list" start="26">
+                <li>تشاو دبليو، بوشان إيه، سانتاماريا إيه دي، سيمون إم جي، ديفيس سي إي. التعلم الآلي: أداة حاسمة لتصميم المستشعرات. Algorithms. 2008;1(2):130-152.</li>
+                <li>ميتشل تي إم، وآخرون. التعلم الآلي 1997. بور ريدج، إلينوي: ماكجرو هيل؛ 1997. 45(37):870-877.</li>
+                <li>مارتينويا إس، ماسوبيو جي. نموذج سلوكي لماكرو ISFET في SPICE. Sens Actuators B. 2000;62(3):182-189.</li>
+                <li>بهاردواج آر، ماجومدر إس. أجيميرا بي كيه، وآخرون. تعويض درجة الحرارة لمستشعر الأس الهيدروجيني القائم على ISFET باستخدام الشبكات العصبية الاصطناعية. In: 2017 IEEE Regional Symposium on Micro and Nanoelectronics (RSM). باتو فيرينغي، ماليزيا: IEEE؛ 2017:155-158.</li>
+                <li>خانا في. تصنيع مستشعر ISFET الدقيق بواسطة عملية NMOS ذات بوابة Al تعتمد على الانتشار وتحديد حساسيته للأس الهيدروجيني من خصائص النقل. Indian J Pure Appl Phys. 2012;50:199-207.</li>
+                <li>شينواري إم دبليو، دين إم جيه، لاندير دي. دراسة ترانزستور تأثير المجال من الإلكتروليت-العازل-أشباه الموصلات (EISFET) مع تطبيقات في تصميم المستشعرات الحيوية. Microelectron Reliab. 2007;47(12):2025-2057.</li>
+                <li>تشو جي سي، وانغ واي إف. خصائص درجة الحرارة لـ a-Si: H gate ISFET. Mater Chem Phys. 2001;70(1):107-111.</li>
+                <li>باراباش بي آر، كوبولد آر إس، ولودارسكي دبليو بي. تحليل جهد العتبة واعتماده على درجة الحرارة في ترانزستورات تأثير المجال من الإلكتروليت-العازل-أشباه الموصلات (EISFET's). IEEE Trans Electron Devices. 1987;34(6):1271-1282.</li>
+                <li>نعيمي إس إي، حاجي ب، هوومينيوك آي، لاونيه جيه، تمبل-بوييه ب. تأثير درجة الحرارة على مستشعر pH-ISFET الذي يعمل في نظام انعكاس ضعيف ومعتدل: نموذج ودوائر. Sensors Actuators B Chem. 2014;202:1019-1027.</li>
+                <li>تشين واي سي، جان إس إس، تشو جي سي. تأثيرات درجة الحرارة على خصائص ترانزستورات تأثير المجال الحساسة لأيونات الهيدروجين مع بوابات تيتانات الرصاص المشتقة من طريقة السول-جل. Anal Chim Acta. 2004;516(1-2):43-48.</li>
+                <li>كوبولد آر إس. محولات للقياسات الطبية الحيوية، مبادئ وتطبيقات. نيويورك: وايلي؛ 1974.</li>
+                <li>غومر آر، ترايسون جي. تحديد تجريبي لأقطاب نصف الخلية المطلقة وطاقات جيبس الحرة للأيونات الفردية للذوبان. J Chem Phys. 1977;66(10):4413-4424.</li>
+                <li>هانسن دبليو، كولب دي. دالة العمل للأقطاب الكهربائية المغمورة. J Electroanal Chem Interfacial Electrochem. 1979;100(1-2):493-500.</li>
+                <li>بوس إل جيه. الحساسية الكيميائية لهياكل الإلكتروليت/العازل/السيليكون: أساسيات تشغيل ISFET. رسالة دكتوراه: Technische Hogeschool Twente؛ 1982.</li>
+                <li>إينزيلت جي، لوينستام إيه، شولز إف. دليل الأقطاب المرجعية. برلين، هايدلبرغ: Springer؛ 2013.</li>
+                <li>سزي إس إم، إن جي كي كي. فيزياء أجهزة أشباه الموصلات. هوبوكين، نيوجيرسي، الولايات المتحدة: جون وايلي؛ 2006.</li>
+                <li>نيو إم إن، دينغ إكس إف، تونغ كيو واي. تأثير نوعين من المواقع السطحية على خصائص pH-ISFETs ذات بوابة Si3N4. Sensors Actuators B Chem. 1996;37(1-2):13-17.</li>
+                <li>روهاتغي إيه. WebPlotDigitizer؛ 2011.</li>
+                <li>مور إتش. MATLAB للمهندسين بيرسون؛ 2017.</li>
+                <li>أشتون جي جيه بي سي، جيري إل. تأثيرات درجة الحرارة على قياس الأس الهيدروجيني. Tsp. 2011;1(2).</li>
+                <li>تشودري آر، شارما إيه، سينها إس، وآخرون. تصنيع وتوصيف ترانزستور تأثير المجال من أكسيد المعدن وأشباه الموصلات من نوع n-metal-oxide-semiconductor، المصنع على الشريحة مع ترانزستور تأثير المجال الحساس للأيونات من نيتريد السيليكون. IET Comput Digit Tech. 2016;10(5):268-272.</li>
+            </ol>
+        </div>
+
+        <div class="page-break relative mt-12">
+            <p class="page-number">--- PAGE 18 ---</p>
+            <div class="wiley-header">
+                <span class="wiley-text">-WILEY-</span>
+                <span class="page-num">17</span>
+            </div>
+            <p class="text-sm text-gray-700 text-left">بهاردواج وآخرون</p>
+
+            <ol class="reference-list" start="47">
+                <li>جوردان إم آي، ميتشل تي إم. التعلم الآلي: اتجاهات، وجهات نظر، وآفاق. Science. 2015;349(6245):255-260.</li>
+                <li>بارتولوزي سي، ناتالي إل، نوري إف، ميتّا جي. الروبوتات ذات حاسة اللمس. Nat Mater. 2016;15(9):921.</li>
+                <li>تشونغ إس، روي إس، جي لي، وآخرون. نمذجة الانجراف الحراري لجيروسكوب MEMS بناءً على شبكة عصبية جينية-إلمان. Mech Syst Signal Process. 2016 72:897-905.</li>
+                <li>وانغ دبليو، تشين إكس. نمذجة الانجراف الحراري وتعويضه لجيروسكوب الألياف البصرية بناءً على آلة المتجه الداعم المحسنة وخوارزميات تحسين سرب الجسيمات. Appl Opt. 2016;55(23):6243-6250.</li>
+                <li>لي جيه، هو جي، تشو واي، زو سي، بنغ دبليو، عالم إس إم جيه. دراسة التعويض الحراري والاصطناعي لمستشعرات الضغط التفاضلي ذات المقاومة البيزوية بواسطة التعلم المتطرف الأساسي المحسن بالصلب المحاكى والمبسط. Sensors. 2017;17(4):894.</li>
+                <li>ليو سي سي، وانغ واي إتش، لي واي، وآخرون. SRAM بسرعة 2.2 جيجاهرتز مع حصانة عالية ضد تغيرات درجة الحرارة لتطبيق التعلم العميق تحت 28 نانومتر. In: 2016 53rd ACM/EDAC/IEEE Design Automation Conference (DAC). أوستن، تكساس، الولايات المتحدة الأمريكية: IEEE؛ 2016:1-6.</li>
+                <li>كوبوتا كي جي، تشين جيه إيه، ليتل إم إيه. التعلم الآلي لبيانات مستشعر يمكن ارتداؤه على نطاق واسع في مرض باركنسون: مفاهيم، وعود، وعقبات، ومستقبلات. Mov Disord. 2016;31(9):1314-1326.</li>
+                <li>شول تي، باير جيه، ويرسترا دي، وآخرون. PyBrain. J Mach Learn Res. 2010;11(فبراير):743-746.</li>
+                <li>نيو إم إن، دينغ إكس إف، تونغ كيو واي. تأثير نوعين من المواقع السطحية على خصائص pH-ISFETs ذات بوابة Si3N4. Sens Actuators B. 1996;37(1-2):13-17.</li>
+                <li>تشيانغ جيه إل، تشين واي سي، تشو جي سي، تشينغ سي سي. تأثير درجة الحرارة على أجهزة ترانزستورات تأثير المجال الحساسة لأيونات pH-ion-sensitive field-effect transistor ذات بوابة AIN/SiO2. Jpn J Appl Phys. 2002;41(2R):541.</li>
+                <li>بيلاوار إيه، فريدي إيه، إلماسري إم، إيتوه ك. تحجيم جهد الإمداد لتشغيل دوائر CMOS غير الحساسة لدرجة الحرارة. IEEE Trans Circuits Syst II Analog Digit Signal Process. 1998;45(3):415-417.</li>
+                <li>تشاين كيه، هوانغ جيه، داستر جيه، كو بي كيه، هو سي. نموذج حركة الإلكترون لـ MOSFET لمدى واسع من درجات الحرارة (77-400 كلفن) لمحاكاة الدوائر المتكاملة. Semicond Sci Technol. 1997;12(4):355.</li>
+                <li>بيريز جيه إف في، فيلاسكو إم إم إم، روساس إم إي إم، رييس إتش إل إم. توصيف مستشعر ISFET. Protein Eng. 2012:35:270-275.</li>
+                <li>عبدالجبار آر دي. تصميم وتنفيذ الشبكة العصبية في FPGA. J Eng Sustain Dev. 2012;16(3):73-90.</li>
+            </ol>
+            <p class="text-xs text-gray-500 mt-4 text-center">
+                كيفية الاستشهاد بهذا المقال: بهاردواج آر، سينها إس، ساهو إن، ماجومدر إس، نارانج ب، موخيا آر. نمذجة ومحاكاة الانجراف الحراري لمستشعر الأس الهيدروجيني القائم على ISFET وتعويضه باستخدام تقنيات التعلم الآلي. Int J Circ Theor Appl. 2019;1-17. <a href="https://doi.org/10.1002/cta.2618" class="text-blue-600 hover:underline">https://doi.org/10.1002/cta.2618</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>
